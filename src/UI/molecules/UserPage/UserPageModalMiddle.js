@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Box, TextField, Button } from "@mui/material";
+import Hidden from '@mui/material/Hidden';
 
 export default function UserPageModalMiddle(props) {
   const [text, setText] = React.useState(props.Email.Email);
@@ -33,7 +34,12 @@ export default function UserPageModalMiddle(props) {
           borderRadius: 5,
         }}
       >
-        <h4 style={{ display: "inline", paddingLeft: "15%",fontFamily: 'GmarketSansMedium' }}>Email :</h4>
+        <Hidden lgUp>
+          <h6 style={{ display: "inline", paddingLeft: "5%",fontFamily: 'GmarketSansMedium'}}>Email :</h6>
+        </Hidden>
+        <Hidden lgDown>
+          <h4 style={{ display: "inline", paddingLeft: "15%",fontFamily: 'GmarketSansMedium' }}>Email :</h4>
+        </Hidden>
         <TextField
           value={text}
           size="small"

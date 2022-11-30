@@ -16,6 +16,7 @@ import UserPageModalHeader from "../../molecules/UserPage/UserPageModalHeader";
 import UserPageModalMiddle from "../../molecules/UserPage/UserPageModalMiddle";
 import Api from "../../../API/API";
 import cookie from "../../../API/cookie";
+import Hidden from '@mui/material/Hidden';
 
 var defaultValue;
 
@@ -36,7 +37,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "40%",
-  minWidth: 400,
+  minWidth: 200,
   bgcolor: "#383b40",
   border: "2px solid #000",
   boxShadow: 24,
@@ -64,7 +65,7 @@ const columns = [
 ];
 
 function createData(UserID, Email, LastLogin, RegistrationDate, button, id) {
-  return { UserID, Email, LastLogin, RegistrationDate, button, id};
+  return { UserID, Email, LastLogin, RegistrationDate, button, id };
 }
 
 export default function UserPageMiddle() {
@@ -87,7 +88,7 @@ export default function UserPageMiddle() {
         text,
         defaultValue
       );
-      if(infoBody != null) {
+      if (infoBody != null) {
         alert("수정되었습니다")
       }
     };
@@ -113,7 +114,7 @@ export default function UserPageMiddle() {
         !row.button,
         defaultValue
       );
-      if(infoBody != null) {
+      if (infoBody != null) {
         alert("수정되었습니다")
       }
     };
@@ -126,7 +127,7 @@ export default function UserPageMiddle() {
         row.id,
         defaultValue
       );
-      if(infoBody != null) {
+      if (infoBody != null) {
         alert("삭제되었습니다")
       }
     };
@@ -137,90 +138,192 @@ export default function UserPageMiddle() {
     if (value == true) {
       return (
         <Box>
-          <Button
-            style={{
-              color: "#CCCCCC",
-              borderRadius: 10,
-              backgroundColor: "#5e646b",
-              marginRight: 5,
-              fontFamily: "GmarketSansMedium",
-            }}
-            onClick={() => handleAccount(row)}
-          >
-             make User
-          </Button>
-          <Button
-            style={{
-              color: "#CCCCCC",
-              borderRadius: 10,
-              backgroundColor: "#5e646b",
-              marginRight: 5,
-              fontFamily: "GmarketSansMedium",
-            }}
-            onClick={() => handleOpenTrue(row)}
-          >
-            modify
-          </Button>
-          <Modal
-            open={openTrue}
-            onClose={handleCloseTrue}
-            BackdropProps={{ style: { opacity: 0.2 } }}
-          >
-            <Box sx={style}>
-              <UserPageModalHeader propFunction={handleCloseTrue} />
-              <UserPageModalMiddle Email={state} propFunction={() => handleEmail(row)} />
-            </Box>
-          </Modal>
+          <Hidden lgDown>
+            <Button
+              style={{
+                color: "#CCCCCC",
+                borderRadius: 10,
+                backgroundColor: "#5e646b",
+                marginRight: 5,
+                fontFamily: "GmarketSansMedium",
+              }}
+              onClick={() => handleAccount(row)}
+            >
+              make User
+            </Button>
+            <Button
+              style={{
+                color: "#CCCCCC",
+                borderRadius: 10,
+                backgroundColor: "#5e646b",
+                marginRight: 5,
+                fontFamily: "GmarketSansMedium",
+              }}
+              onClick={() => handleOpenTrue(row)}
+            >
+              modify
+            </Button>
+            <Modal
+              open={openTrue}
+              onClose={handleCloseTrue}
+              BackdropProps={{ style: { opacity: 0.2 } }}
+            >
+              <Box sx={style}>
+                <UserPageModalHeader propFunction={handleCloseTrue} />
+                <UserPageModalMiddle Email={state} propFunction={() => handleEmail(row)} />
+              </Box>
+            </Modal>
+          </Hidden>
+          <Hidden lgUp>
+            <Button
+              style={{
+                color: "#CCCCCC",
+                borderRadius: 10,
+                backgroundColor: "#5e646b",
+                marginRight: 5,
+                fontFamily: "GmarketSansMedium",
+                fontSize: 5,
+                width: 20,
+                height: 35,
+              }}
+              onClick={() => handleAccount(row)}
+            >
+              make User
+            </Button>
+            <Button
+              style={{
+                color: "#CCCCCC",
+                borderRadius: 10,
+                backgroundColor: "#5e646b",
+                marginRight: 5,
+                fontFamily: "GmarketSansMedium",
+                fontSize: 5,
+                width: 20,
+                height: 35,
+              }}
+              onClick={() => handleOpenTrue(row)}
+            >
+              modify
+            </Button>
+            <Modal
+              open={openTrue}
+              onClose={handleCloseTrue}
+              BackdropProps={{ style: { opacity: 0.2 } }}
+            >
+              <Box sx={style}>
+                <UserPageModalHeader propFunction={handleCloseTrue} />
+                <UserPageModalMiddle Email={state} propFunction={() => handleEmail(row)} />
+              </Box>
+            </Modal>
+          </Hidden>
         </Box>
       );
     } else if (value == false) {
       return (
         <Box>
-          <Button
-            style={{
-              color: "white",
-              borderRadius: 10,
-              backgroundColor: "#2877b9",
-              marginRight: 5,
-              fontFamily: "GmarketSansMedium",
-            }}
-            onClick={() => handleAccount(row)}
-          >
-            make ADMIN
-          </Button>
-          <Button
-            style={{
-              color: "#CCCCCC",
-              borderRadius: 10,
-              backgroundColor: "#5e646b",
-              fontFamily: "GmarketSansMedium",
-              marginRight: 5,
-            }}
-            onClick={() => handleOpenFalse(row)}
-          >
-            modify
-          </Button>
-          <Modal
-            open={openFalse}
-            onClose={handleCloseFalse}
-            BackdropProps={{ style: { opacity: 0.2 } }}
-          >
-            <Box sx={style}>
-              <UserPageModalHeader propFunction={handleCloseFalse} />
-              <UserPageModalMiddle Email={state} propFunction={handleEmail} />
-            </Box>
-          </Modal>
-          <Button
-            style={{
-              color: "#CCCCCC",
-              borderRadius: 10,
-              backgroundColor: "#393939",
-              fontFamily: "GmarketSansMedium",
-            }}
-            onClick={() => handleDeleteAccount(row)}
-          >
-            Delete
-          </Button>
+          <Hidden lgUp>
+            <Button
+              style={{
+                color: "white",
+                borderRadius: 10,
+                backgroundColor: "#2877b9",
+                marginRight: 5,
+                fontSize: 5,
+                width: 20,
+                height: 35,
+                fontFamily: "GmarketSansMedium",
+              }}
+              onClick={() => handleAccount(row)}
+            >
+              make ADMIN
+            </Button>
+            <Button
+              style={{
+                color: "#CCCCCC",
+                borderRadius: 10,
+                backgroundColor: "#5e646b",
+                fontFamily: "GmarketSansMedium",
+                marginRight: 5,
+                fontSize: 5,
+                width: 20,
+                height: 35,
+              }}
+              onClick={() => handleOpenFalse(row)}
+            >
+              modify
+            </Button>
+            <Modal
+              open={openFalse}
+              onClose={handleCloseFalse}
+              BackdropProps={{ style: { opacity: 0.2 } }}
+            >
+              <Box sx={style}>
+                <UserPageModalHeader propFunction={handleCloseFalse} />
+                <UserPageModalMiddle Email={state} propFunction={handleEmail} />
+              </Box>
+            </Modal>
+            <Button
+              style={{
+                color: "#CCCCCC",
+                borderRadius: 10,
+                fontSize: 5,
+                width: 20,
+                height: 35,
+                backgroundColor: "#393939",
+                fontFamily: "GmarketSansMedium",
+              }}
+              onClick={() => handleDeleteAccount(row)}
+            >
+              Delete
+            </Button>
+          </Hidden>
+          <Hidden lgDown>
+            <Button
+              style={{
+                color: "white",
+                borderRadius: 10,
+                backgroundColor: "#2877b9",
+                marginRight: 5,
+                fontFamily: "GmarketSansMedium",
+              }}
+              onClick={() => handleAccount(row)}
+            >
+              make ADMIN
+            </Button>
+            <Button
+              style={{
+                color: "#CCCCCC",
+                borderRadius: 10,
+                backgroundColor: "#5e646b",
+                fontFamily: "GmarketSansMedium",
+                marginRight: 5,
+              }}
+              onClick={() => handleOpenFalse(row)}
+            >
+              modify
+            </Button>
+            <Modal
+              open={openFalse}
+              onClose={handleCloseFalse}
+              BackdropProps={{ style: { opacity: 0.2 } }}
+            >
+              <Box sx={style}>
+                <UserPageModalHeader propFunction={handleCloseFalse} />
+                <UserPageModalMiddle Email={state} propFunction={handleEmail} />
+              </Box>
+            </Modal>
+            <Button
+              style={{
+                color: "#CCCCCC",
+                borderRadius: 10,
+                backgroundColor: "#393939",
+                fontFamily: "GmarketSansMedium",
+              }}
+              onClick={() => handleDeleteAccount(row)}
+            >
+              Delete
+            </Button>
+          </Hidden>
         </Box>
       );
     } else {
@@ -264,9 +367,7 @@ export default function UserPageMiddle() {
     >
       <TableContainer
         style={{
-          width: "95%",
           height: "65vh",
-          marginLeft: 50,
           backgroundColor: "#131313",
         }}
       >
