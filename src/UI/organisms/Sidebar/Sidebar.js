@@ -76,7 +76,7 @@ const Sidebar = ({ onMobileClose, openMobile }) => {
         variant="temporary"
         PaperProps={{
           sx: {
-            width: 300,
+            width: 200,
             display: "block",
             backgroundColor: "#333333"
           }

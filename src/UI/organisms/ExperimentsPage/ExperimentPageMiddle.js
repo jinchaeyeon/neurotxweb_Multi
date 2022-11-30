@@ -22,6 +22,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
 import Api from "../../../API/API";
 import cookie from "../../../API/cookie";
+import Hidden from '@mui/material/Hidden';
 
 var defaultValue;
 
@@ -42,7 +43,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "40%",
-  minWidth: 400,
+  minWidth: 200,
   bgcolor: "#383b40",
   border: "2px solid #000",
   boxShadow: 24,
@@ -65,7 +66,7 @@ const columns = [
   {
     id: "button",
     label: "-",
-    minWidth: 200,
+    minWidth: 250,
   },
 ];
 
@@ -90,14 +91,14 @@ export default function ExperimentPageMiddle() {
     const getData = async () => {
       let d = [];
       const infoBody = await Api.getAPI_ExperimentList(Search,
-      defaultValue);
+        defaultValue);
       infoBody.data.map((item) => {
         var stitle = item.title;
         if (stitle.length > 25)
-            stitle = stitle.substring(0, 24) + "..";
+          stitle = stitle.substring(0, 24) + "..";
         var sdesc = item.desc;
         if (sdesc.length > 75)
-            sdesc = sdesc.substring(0, 75) + "..";
+          sdesc = sdesc.substring(0, 75) + "..";
         d.push(
           createData(
             item.id,
@@ -129,8 +130,8 @@ export default function ExperimentPageMiddle() {
 
   const handleProtocol = (id, name, manager, content) => {
     const getData = async () => {
-      const infoBody = Api.getAPI_ExperimentModify(id, name,manager,content,defaultValue);
-      if(infoBody != null) {
+      const infoBody = Api.getAPI_ExperimentModify(id, name, manager, content, defaultValue);
+      if (infoBody != null) {
         alert("수정되었습니다")
       }
     };
@@ -144,8 +145,8 @@ export default function ExperimentPageMiddle() {
 
   const handleAddProtocol = (name, manager, content) => {
     const getData = async () => {
-      const infoBody = Api.getAPI_ExperimentCreate(name,manager,content,defaultValue);
-      if(infoBody != null) {
+      const infoBody = Api.getAPI_ExperimentCreate(name, manager, content, defaultValue);
+      if (infoBody != null) {
         alert("등록되었습니다")
       }
     };
@@ -156,7 +157,7 @@ export default function ExperimentPageMiddle() {
   const handleDeleteAccount = (row) => {
     const getData = async () => {
       const infoBody = Api.getAPI_ExperimentDelete(row.id, defaultValue);
-      if(infoBody != null) {
+      if (infoBody != null) {
         alert("삭제되었습니다.")
       }
     };
@@ -167,55 +168,117 @@ export default function ExperimentPageMiddle() {
     if (value == "button") {
       return (
         <Box>
-          <Link to={`../ExperimentsSub/${row.id}`}>
+          <Hidden lgDown>
+            <Link to={`../ExperimentsSub/${row.id}`}>
+              <Button
+                style={{
+                  color: "white",
+                  borderRadius: 10,
+                  backgroundColor: "#2877b9",
+                  marginRight: 5,
+                  fontFamily: "GmarketSansMedium",
+                }}
+              >
+                실험관리
+              </Button>
+            </Link>
             <Button
               style={{
-                color: "white",
+                color: "#CCCCCC",
                 borderRadius: 10,
-                backgroundColor: "#2877b9",
+                backgroundColor: "#5e646b",
                 marginRight: 5,
                 fontFamily: "GmarketSansMedium",
               }}
+              onClick={() => handleOpen(row)}
             >
-              실험관리
+              수정
             </Button>
-          </Link>
-          <Button
-            style={{
-              color: "#CCCCCC",
-              borderRadius: 10,
-              backgroundColor: "#5e646b",
-              marginRight: 5,
-              fontFamily: "GmarketSansMedium",
-            }}
-            onClick={() => handleOpen(row)}
-          >
-            수정
-          </Button>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            BackdropProps={{ style: { opacity: 0.2 } }}
-          >
-            <Box sx={style}>
-              <ExperimentPageChangeModalHeader propFunction={handleClose} />
-              <ExperimentPageChangeModalMiddle
-                data={state}
-                propFunction={handleProtocol}
-              />
-            </Box>
-          </Modal>
-          <Button
-            style={{
-              color: "#CCCCCC",
-              borderRadius: 10,
-              backgroundColor: "#393939",
-              fontFamily: "GmarketSansMedium",
-            }}
-            onClick={() => handleDeleteAccount(row)}
-          >
-            삭제
-          </Button>
+            <Modal
+              open={open}
+              onClose={handleClose}
+              BackdropProps={{ style: { opacity: 0.2 } }}
+            >
+              <Box sx={style}>
+                <ExperimentPageChangeModalHeader propFunction={handleClose} />
+                <ExperimentPageChangeModalMiddle
+                  data={state}
+                  propFunction={handleProtocol}
+                />
+              </Box>
+            </Modal>
+            <Button
+              style={{
+                color: "#CCCCCC",
+                borderRadius: 10,
+                backgroundColor: "#393939",
+                fontFamily: "GmarketSansMedium",
+              }}
+              onClick={() => handleDeleteAccount(row)}
+            >
+              삭제
+            </Button>
+          </Hidden>
+          <Hidden lgUp>
+            <Link to={`../ExperimentsSub/${row.id}`}>
+              <Button
+                style={{
+                  color: "white",
+                  borderRadius: 10,
+                  backgroundColor: "#2877b9",
+                  marginRight: 5,
+                  fontFamily: "GmarketSansMedium",
+                  fontSize: 5,
+                  width: 20,
+                  height: 35,
+                }}
+              >
+                실험관리
+              </Button>
+            </Link>
+            <Button
+              style={{
+                color: "#CCCCCC",
+                borderRadius: 10,
+                backgroundColor: "#5e646b",
+                marginRight: 5,
+                fontFamily: "GmarketSansMedium",
+                fontSize: 5,
+                width: 20,
+                height: 35,
+              }}
+              onClick={() => handleOpen(row)}
+            >
+              수정
+            </Button>
+            <Modal
+              open={open}
+              onClose={handleClose}
+              BackdropProps={{ style: { opacity: 0.2 } }}
+            >
+              <Box sx={style}>
+                <ExperimentPageChangeModalHeader propFunction={handleClose} />
+                <ExperimentPageChangeModalMiddle
+                  data={state}
+                  propFunction={handleProtocol}
+                />
+              </Box>
+            </Modal>
+            <Button
+              style={{
+                color: "#CCCCCC",
+                borderRadius: 10,
+                backgroundColor: "#393939",
+                fontFamily: "GmarketSansMedium",
+                fontSize: 5,
+                width: 20,
+                height: 35,
+              }}
+              onClick={() => handleDeleteAccount(row)}
+            >
+              삭제
+            </Button>
+          </Hidden>
         </Box>
       );
     } else {
@@ -227,14 +290,14 @@ export default function ExperimentPageMiddle() {
     const getData = async () => {
       let d = [];
       const infoBody = await Api.getAPI_ExperimentList(Search,
-      defaultValue);
+        defaultValue);
       infoBody.data.map((item) => {
         var stitle = item.title;
         if (stitle.length > 25)
-            stitle = stitle.substring(0, 24) + "..";
+          stitle = stitle.substring(0, 24) + "..";
         var sdesc = item.desc;
         if (sdesc.length > 75)
-            sdesc = sdesc.substring(0, 75) + "..";
+          sdesc = sdesc.substring(0, 75) + "..";
         d.push(
           createData(
             item.id,
@@ -258,17 +321,10 @@ export default function ExperimentPageMiddle() {
       <TextField
         value={Search}
         onChange={handleSearchChange}
-        placeholder="실험명으로 검색"
+        placeholder="실험명"
         size="small"
-        style={{ backgroundColor: "white", marginLeft: 50 }}
+        style={{ backgroundColor: "white", width: "35%"}}
         InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon
-                style={{ color: "#2877b9" }}
-              />
-            </InputAdornment>
-          ),
           style: { fontFamily: "GmarketSansMedium" },
         }}
       />
@@ -311,9 +367,7 @@ export default function ExperimentPageMiddle() {
       </Modal>
       <TableContainer
         style={{
-          width: "95%",
-          height: "58.7vh",
-          marginLeft: 50,
+          height: "55vh",
           backgroundColor: "#131313",
         }}
       >

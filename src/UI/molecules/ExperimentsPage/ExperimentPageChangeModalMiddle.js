@@ -1,10 +1,11 @@
 import * as React from "react";
 import { Box, TextField, Button } from "@mui/material";
+import Hidden from '@mui/material/Hidden';
 
 export default function ExperimentPageChangeModalMiddle(props) {
   const [name, setName] = React.useState(props.data.name);
   const [manager, setManager] = React.useState(props.data.manager);
-  const [content, setContent] = React.useState(props.data.content||'');
+  const [content, setContent] = React.useState(props.data.content || '');
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -19,11 +20,11 @@ export default function ExperimentPageChangeModalMiddle(props) {
   };
 
   const handleup = () => {
-    if(name == '' || name == null || name == undefined){
+    if (name == '' || name == null || name == undefined) {
       alert('실험 프로토콜 명은 필수 항목입니다.')
-    } else if(manager == '' || manager == null || manager == undefined){
+    } else if (manager == '' || manager == null || manager == undefined) {
       alert('담당자는 필수 항목입니다.')
-    } else{
+    } else {
       props.propFunction(props.data.id, name, manager, content)
     }
   }
@@ -38,10 +39,13 @@ export default function ExperimentPageChangeModalMiddle(props) {
           borderRadius: 5,
         }}
       >
-        <Box style={{display: "block", height: 37}}>
-          <h4 style={{ display: "inline", paddingLeft: "15%",fontFamily: 'GmarketSansMedium' }}>
-            실험 프로토콜 명 : 
-          </h4>
+        <Box style={{ display: "block", height: 37 }}>
+          <Hidden lgUp>
+            <h6 style={{ display: "inline", paddingLeft: "5%", fontFamily: 'GmarketSansMedium' }}>프로토콜 명 :</h6>
+          </Hidden>
+          <Hidden lgDown>
+            <h4 style={{ display: "inline", paddingLeft: "15%", fontFamily: 'GmarketSansMedium' }}>프로토콜 명 :</h4>
+          </Hidden>
           <TextField
             value={name}
             size="small"
@@ -52,13 +56,16 @@ export default function ExperimentPageChangeModalMiddle(props) {
               backgroundColor: "white",
             }}
             onChange={handleNameChange}
-            inputProps={{style:{fontFamily: 'GmarketSansMedium'}}}
+            inputProps={{ style: { fontFamily: 'GmarketSansMedium' } }}
           />
         </Box>
-        <Box style={{display: "block" , height: 37, marginTop: 10}}>
-          <h4 style={{ display: "inline", paddingLeft: "15%",fontFamily: 'GmarketSansMedium' }}>
-            담당자 :
-          </h4>
+        <Box style={{ display: "block", height: 37, marginTop: 10 }}>
+          <Hidden lgUp>
+            <h6 style={{ display: "inline", paddingLeft: "5%", fontFamily: 'GmarketSansMedium' }}> 담당자 :</h6>
+          </Hidden>
+          <Hidden lgDown>
+            <h4 style={{ display: "inline", paddingLeft: "15%", fontFamily: 'GmarketSansMedium' }}> 담당자 :</h4>
+          </Hidden>
           <TextField
             value={manager}
             size="small"
@@ -69,13 +76,16 @@ export default function ExperimentPageChangeModalMiddle(props) {
               backgroundColor: "white",
             }}
             onChange={handleManagerChange}
-            inputProps={{style:{fontFamily: 'GmarketSansMedium'}}}
+            inputProps={{ style: { fontFamily: 'GmarketSansMedium' } }}
           />
         </Box>
-        <Box style={{display: "block" , height: 37, marginTop: 10}}>
-          <h4 style={{ display: "inline", paddingLeft: "15%",fontFamily: 'GmarketSansMedium' }}>
-            상세설명 :
-          </h4>
+        <Box style={{ display: "block", height: 37, marginTop: 10 }}>
+          <Hidden lgUp>
+            <h6 style={{ display: "inline", paddingLeft: "5%", fontFamily: 'GmarketSansMedium' }}> 상세설명 :</h6>
+          </Hidden>
+          <Hidden lgDown>
+            <h4 style={{ display: "inline", paddingLeft: "15%", fontFamily: 'GmarketSansMedium' }}> 상세설명 :</h4>
+          </Hidden>
           <TextField
             value={content}
             size="small"
@@ -86,7 +96,7 @@ export default function ExperimentPageChangeModalMiddle(props) {
               backgroundColor: "white",
             }}
             onChange={handleContentChange}
-            inputProps={{style:{fontFamily: 'GmarketSansMedium'}}}
+            inputProps={{ style: { fontFamily: 'GmarketSansMedium' } }}
           />
         </Box>
       </Box>

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Box, TextField, Button } from "@mui/material";
+import Hidden from '@mui/material/Hidden';
 
 export default function ExperimentPageModalMiddle(props) {
   const [name, setName] = React.useState('');
@@ -39,9 +40,12 @@ export default function ExperimentPageModalMiddle(props) {
         }}
       >
         <Box style={{display: "block", height: 37}}>
-          <h4 style={{ display: "inline", paddingLeft: "15%",fontFamily: 'GmarketSansMedium' }}>
-            실험 프로토콜 명 :
-          </h4>
+          <Hidden lgUp>
+          <h6 style={{ display: "inline", paddingLeft: "5%",fontFamily: 'GmarketSansMedium'}}>프로토콜 명 :</h6>
+        </Hidden>
+        <Hidden lgDown>
+          <h4 style={{ display: "inline", paddingLeft: "15%",fontFamily: 'GmarketSansMedium' }}>프로토콜 명 :</h4>
+        </Hidden>
           <TextField
             value={name}
             size="small"
@@ -56,9 +60,12 @@ export default function ExperimentPageModalMiddle(props) {
           />
         </Box>
         <Box style={{display: "block" , height: 37, marginTop: 10}}>
-          <h4 style={{ display: "inline", paddingLeft: "15%",fontFamily: 'GmarketSansMedium' }}>
-            담당자 :
-          </h4>
+          <Hidden lgUp>
+          <h6 style={{ display: "inline", paddingLeft: "5%",fontFamily: 'GmarketSansMedium'}}> 담당자 :</h6>
+        </Hidden>
+        <Hidden lgDown>
+          <h4 style={{ display: "inline", paddingLeft: "15%",fontFamily: 'GmarketSansMedium' }}> 담당자 :</h4>
+        </Hidden>
           <TextField
             value={manager}
             size="small"
@@ -73,9 +80,12 @@ export default function ExperimentPageModalMiddle(props) {
           />
         </Box>
         <Box style={{display: "block" , height: 37, marginTop: 10}}>
-          <h4 style={{ display: "inline", paddingLeft: "15%",fontFamily: 'GmarketSansMedium' }}>
-            상세설명 :
-          </h4>
+          <Hidden lgUp>
+          <h6 style={{ display: "inline", paddingLeft: "5%",fontFamily: 'GmarketSansMedium'}}> 상세설명 :</h6>
+        </Hidden>
+        <Hidden lgDown>
+          <h4 style={{ display: "inline", paddingLeft: "15%",fontFamily: 'GmarketSansMedium' }}> 상세설명 :</h4>
+        </Hidden>
           <TextField
             value={content}
             size="small"

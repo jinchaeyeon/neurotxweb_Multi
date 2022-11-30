@@ -176,7 +176,7 @@ export default function LicensePageMiddle() {
       </Button>
       <TableContainer
         style={{
-          height: "65vh",
+          height: "55vh",
           backgroundColor: "#131313",
         }}
       >
