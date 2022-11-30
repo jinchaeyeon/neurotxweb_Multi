@@ -9,9 +9,11 @@ import {
   TableBody,
   Table,
   Paper,
+  Box
 } from "@mui/material";
 import Api from "../../../API/API";
 import cookie from "../../../API/cookie";
+import Hidden from '@mui/material/Hidden';
 
 var defaultValue;
 
@@ -25,19 +27,6 @@ if (user_id) {
     key: api_token,
   };
 }
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "40%",
-  minWidth: 400,
-  bgcolor: "#383b40",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
 
 const columns = [
   { id: "Serial", label: "Serial", minWidth: 50 },
@@ -78,7 +67,7 @@ export default function LicensePageMiddle() {
         row.Serial,
         defaultValue
       );
-      if(infoBody != null) {
+      if (infoBody != null) {
         alert("삭제되었습니다")
       }
     };
@@ -88,26 +77,45 @@ export default function LicensePageMiddle() {
   const AddLicense = () => {
     const getData = async () => {
       const infoBody = await Api.getAPI_ADDLicenseKey(defaultValue);
-      if(infoBody != null) {
+      if (infoBody != null) {
         alert("라이센스 키가 생성되었습니다")
       }
     };
-   getData();
+    getData();
   };
 
   function cell(value, row) {
     if (value == undefined) {
       return (
-        <Button
-          style={{
-            color: "#CCCCCC",
-            borderRadius: 10,
-            backgroundColor: "#393939",
-          }}
-          onClick={() => handleDeleteAccount(row)}
-        >
-          Delete
-        </Button>
+        <Box>
+          <Hidden lgDown>
+            <Button
+              style={{
+                color: "#CCCCCC",
+                borderRadius: 10,
+                backgroundColor: "#393939",
+              }}
+              onClick={() => handleDeleteAccount(row)}
+            >
+              Delete
+            </Button>
+          </Hidden>
+          <Hidden lgUp>
+            <Button
+              style={{
+                color: "#CCCCCC",
+                borderRadius: 10,
+                backgroundColor: "#393939",
+                fontSize: 5,
+                width: 20,
+                height: 35,
+              }}
+              onClick={() => handleDeleteAccount(row)}
+            >
+              Delete
+            </Button>
+          </Hidden>
+        </Box>
       );
     } else {
       return value;
@@ -155,10 +163,10 @@ export default function LicensePageMiddle() {
     >
       <Button
         style={{
+          float: "right",
           color: "#CCCCCC",
           borderRadius: 10,
           backgroundColor: "#5e646b",
-          marginLeft: 50,
           marginBottom: 10,
           fontFamily: "GmarketSansMedium",
         }}
@@ -168,9 +176,7 @@ export default function LicensePageMiddle() {
       </Button>
       <TableContainer
         style={{
-          width: "95%",
-          height: "58.7vh",
-          marginLeft: 50,
+          height: "65vh",
           backgroundColor: "#131313",
         }}
       >
