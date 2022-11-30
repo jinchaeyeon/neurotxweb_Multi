@@ -1,5 +1,5 @@
 import React from "react";
-import { FormControl, NativeSelect, Box } from "@mui/material";
+import { Hidden, Box } from "@mui/material";
 import getRealTimeChart from "../ExperimentsMachinePage/realtime_chart";
 
 const d3 = document.createElement("script");
@@ -32,14 +32,19 @@ function ExperimentResultPageMiddle(props) {
 
   function roop(i){
     return(
-      <Box style={{ border: " 2px solid white", marginTop: 20, width: "90%", height: 60, marginLeft: 50}}>
-      <h3 style={{ color: "white", display: "inline" }}>{signal_names[i]}</h3>
+      <Box style={{ border: " 2px solid white", marginTop: 20, width: "70vw", height: "6vh", marginLeft: 50}}>
+        <Hidden lgUp>
+          <h5 style={{ color: "white", display: "inline" }}>{signal_names[i]}</h5>
+        </Hidden>
+        <Hidden lgDown>
+          <h3 style={{ color: "white", display: "inline" }}>{signal_names[i]}</h3>
+        </Hidden>
       </Box>
     )
   }
 
   return (
-    <div id="chartlist" style={{ width: "100%", height: "68vh"}}>
+    <div id="chartlist" style={{ width: "100%", height: "60vh"}}>
         {roop(0)}
         {roop(1)}
         {roop(2)}
