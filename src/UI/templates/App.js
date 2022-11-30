@@ -21,7 +21,7 @@ const App = () => {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
   var user_id = cookie.getCookie("userAccount");
   setInterval(() => {
-    if (cookie.getCookie("is_Login") == 0) {
+    if (cookie.getCookie("is_Login") == 0 && cookie.getCookie("userAccount") != null) {
       alert("중복 로그인입니다. 다시 로그인 해주세요.");
       cookie.deleteCookie();
       cookie.setCookie("is_Login", 1, 1);
