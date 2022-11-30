@@ -18,7 +18,6 @@ import ExperimentPageChangeModalHeader from "../../molecules/ExperimentsPage/Exp
 import ExperimentPageChangeModalMiddle from "../../molecules/ExperimentsPage/ExperimentPageChangeModalMiddle";
 import ExperimentPageModalHeader from "../../molecules/ExperimentsPage/ExperimentPageModalHeader";
 import ExperimentPageModalMiddle from "../../molecules/ExperimentsPage/ExperimentPageModalMiddle";
-import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
 import Api from "../../../API/API";
 import cookie from "../../../API/cookie";

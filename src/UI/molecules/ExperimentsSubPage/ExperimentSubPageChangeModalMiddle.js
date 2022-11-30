@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import Api from "../../../API/API";
 import cookie from "../../../API/cookie";
+import Hidden from '@mui/material/Hidden';
 
 var defaultValue;
 
@@ -124,15 +125,12 @@ export default function ExperimentSubPageChangeModalMiddle(props) {
         }}
       >
         <Box style={{ display: "block", height: 37 }}>
-          <h4
-            style={{
-              display: "inline",
-              paddingLeft: "15%",
-              fontFamily: "GmarketSansMedium",
-            }}
-          >
-            이름:
-          </h4>
+        <Hidden lgUp>
+            <h6 style={{ display: "inline", paddingLeft: "5%", fontFamily: 'GmarketSansMedium' }}>이름:</h6>
+          </Hidden>
+          <Hidden lgDown>
+            <h4 style={{ display: "inline", paddingLeft: "15%", fontFamily: 'GmarketSansMedium' }}>이름:</h4>
+          </Hidden>
           <TextField
             value={name}
             size="small"
@@ -147,15 +145,12 @@ export default function ExperimentSubPageChangeModalMiddle(props) {
           />
         </Box>
         <Box style={{ display: "block", height: 37, marginTop: 10 }}>
-          <h4
-            style={{
-              display: "inline",
-              paddingLeft: "15%",
-              fontFamily: "GmarketSansMedium",
-            }}
-          >
-            성별:
-          </h4>
+        <Hidden lgUp>
+            <h6 style={{ display: "inline", paddingLeft: "5%", fontFamily: 'GmarketSansMedium' }}>성별:</h6>
+          </Hidden>
+          <Hidden lgDown>
+            <h4 style={{ display: "inline", paddingLeft: "15%", fontFamily: 'GmarketSansMedium' }}>성별:</h4>
+          </Hidden>
           <FormControl
             style={{ float: "right", width: "40%", marginRight: "10%" }}
           >
@@ -178,15 +173,12 @@ export default function ExperimentSubPageChangeModalMiddle(props) {
           </FormControl>
         </Box>
         <Box style={{ display: "block", height: 37, marginTop: 10 }}>
-          <h4
-            style={{
-              display: "inline",
-              paddingLeft: "15%",
-              fontFamily: "GmarketSansMedium",
-            }}
-          >
-            생년월일(8자리)
-          </h4>
+        <Hidden lgUp>
+            <h6 style={{ display: "inline", paddingLeft: "5%", fontFamily: 'GmarketSansMedium' }}>생년월일(8자리):</h6>
+          </Hidden>
+          <Hidden lgDown>
+            <h4 style={{ display: "inline", paddingLeft: "15%", fontFamily: 'GmarketSansMedium' }}>생년월일(8자리):</h4>
+          </Hidden>
           <TextField
             value={birthday}
             size="small"
@@ -201,15 +193,12 @@ export default function ExperimentSubPageChangeModalMiddle(props) {
           />
         </Box>
         <Box style={{ display: "block", height: 37, marginTop: 10 }}>
-          <h4
-            style={{
-              display: "inline",
-              paddingLeft: "15%",
-              fontFamily: "GmarketSansMedium",
-            }}
-          >
-            주진단명
-          </h4>
+        <Hidden lgUp>
+            <h6 style={{ display: "inline", paddingLeft: "5%", fontFamily: 'GmarketSansMedium' }}>주진단명:</h6>
+          </Hidden>
+          <Hidden lgDown>
+            <h4 style={{ display: "inline", paddingLeft: "15%", fontFamily: 'GmarketSansMedium' }}>주진단명:</h4>
+          </Hidden>
           <TextField
             value={maindiagnosis}
             size="small"
@@ -224,15 +213,12 @@ export default function ExperimentSubPageChangeModalMiddle(props) {
           />
         </Box>
         <Box style={{ display: "block", height: 37, marginTop: 10 }}>
-          <h4
-            style={{
-              display: "inline",
-              paddingLeft: "15%",
-              fontFamily: "GmarketSansMedium",
-            }}
-          >
-            설문조사(구글링크)
-          </h4>
+        <Hidden lgUp>
+            <h6 style={{ display: "inline", paddingLeft: "5%", fontFamily: 'GmarketSansMedium' }}>설문조사 링크:</h6>
+          </Hidden>
+          <Hidden lgDown>
+            <h4 style={{ display: "inline", paddingLeft: "15%", fontFamily: 'GmarketSansMedium' }}>설문조사 링크:</h4>
+          </Hidden>
           <TextField
             value={link}
             size="small"
@@ -247,9 +233,12 @@ export default function ExperimentSubPageChangeModalMiddle(props) {
           />
         </Box>
         <Box style={{ display: "block", height: 37, marginTop: 10 }}>
-          <h4 style={{ display: "inline", paddingLeft: "15%",fontFamily: 'GmarketSansMedium' }}>
-            동의서 파일선택
-          </h4>
+        <Hidden lgUp>
+            <h6 style={{ display: "inline", paddingLeft: "5%", fontFamily: 'GmarketSansMedium' }}>동의서 파일선택:</h6>
+          </Hidden>
+          <Hidden lgDown>
+            <h4 style={{ display: "inline", paddingLeft: "15%", fontFamily: 'GmarketSansMedium' }}>동의서 파일선택:</h4>
+          </Hidden>
           <input
             style={{
               float: "right",

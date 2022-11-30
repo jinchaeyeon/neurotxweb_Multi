@@ -21,6 +21,7 @@ import ExperimentSubPageModalMiddle from "../../molecules/ExperimentsSubPage/Exp
 import { Link } from "react-router-dom";
 import Api from "../../../API/API";
 import cookie from "../../../API/cookie";
+import Hidden from '@mui/material/Hidden';
 
 var defaultValue;
 
@@ -41,7 +42,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "40%",
-  minWidth: 400,
+  minWidth: 200,
   bgcolor: "#383b40",
   border: "2px solid #000",
   boxShadow: 24,
@@ -90,7 +91,7 @@ const columns = [
   {
     id: "button",
     label: "-",
-    minWidth: 200,
+    minWidth: 250,
   },
 ];
 
@@ -238,6 +239,7 @@ export default function ExperimentSubPageMiddle(props) {
     if (value == "button") {
       return (
         <Box>
+          <Hidden lgDown>
           <Link to={`../ExperimentsResult/${Experimentsid}/${row.id}`}>
             <Button
               style={{
@@ -287,6 +289,67 @@ export default function ExperimentSubPageMiddle(props) {
           >
             삭제
           </Button>
+          </Hidden>
+          <Hidden lgUp>
+          <Link to={`../ExperimentsResult/${Experimentsid}/${row.id}`}>
+            <Button
+              style={{
+                color: "white",
+                borderRadius: 10,
+                backgroundColor: "#2877b9",
+                marginRight: 5,
+                fontFamily: "GmarketSansMedium",
+                fontSize: 5,
+                width: 20,
+                height: 35,
+              }}
+            >
+              실험정보
+            </Button>
+          </Link>
+          <Button
+            style={{
+              color: "#CCCCCC",
+              borderRadius: 10,
+              backgroundColor: "#5e646b",
+              marginRight: 5,
+              fontFamily: "GmarketSansMedium",
+              fontSize: 5,
+              width: 20,
+              height: 35,
+            }}
+            onClick={() => handleOpen(row)}
+          >
+            수정
+          </Button>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            BackdropProps={{ style: { opacity: 0.2 } }}
+          >
+            <Box sx={style}>
+              <ExperimentSubPageChangeModalHeader propFunction={handleClose} />
+              <ExperimentSubPageChangeModalMiddle
+                data={state}
+                propFunction={handleProtocol}
+              />
+            </Box>
+          </Modal>
+          <Button
+            style={{
+              color: "#CCCCCC",
+              borderRadius: 10,
+              backgroundColor: "#393939",
+              fontFamily: "GmarketSansMedium",
+              fontSize: 5,
+              width: 20,
+              height: 35,
+            }}
+            onClick={() => handleDeleteAccount(row)}
+          >
+            삭제
+          </Button>
+          </Hidden>
         </Box>
       );
     } else if (value == null) {
@@ -400,9 +463,7 @@ export default function ExperimentSubPageMiddle(props) {
       </Modal>
       <TableContainer
         style={{
-          width: "95%",
-          height: "58.7vh",
-          marginLeft: 50,
+          height: "55vh",
           backgroundColor: "#131313",
         }}
       >
