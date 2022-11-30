@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import Header from "../organisms/Header/Header";
 import Sidebar from "../organisms/Sidebar/Sidebar";
 import ExperimentsPage from "../pages/ExperimentsPage/ExperimentsPage";
@@ -15,10 +15,12 @@ import "./App.css";
 import Box from "@mui/material/Box";
 import cookie from "../../API/cookie";
 import WebGLPage from "../pages/WebGLPage/WebGLPage";
+import Hidden from '@mui/material/Hidden';
 
 const App = () => {
+  const [isMobileNavOpen, setMobileNavOpen] = useState(false);
   var user_id = cookie.getCookie("userAccount");
-  setInterval(() =>  {
+  setInterval(() => {
     if (cookie.getCookie("is_Login") == 0) {
       alert("중복 로그인입니다. 다시 로그인 해주세요.");
       cookie.deleteCookie();
@@ -42,9 +44,13 @@ const App = () => {
                   </Box>
                 ) : (
                   <Box style={{ display: "flex", width: "100%" }}>
-                    <Sidebar />
+                    <Sidebar
+                      onMobileClose={() => setMobileNavOpen(false)}
+                      openMobile={isMobileNavOpen}
+                    />
+
                     <Box style={{ width: "100%" }}>
-                      <Header />
+                      <Header onMobileNavOpen={() => setMobileNavOpen(true)} />
                       <ExperimentsPage />
                     </Box>
                   </Box>
@@ -85,9 +91,12 @@ const App = () => {
               path="/ExperimentsSub/:id"
               element={
                 <Box style={{ display: "flex", width: "100%" }}>
-                  <Sidebar />
+                  <Sidebar
+                    onMobileClose={() => setMobileNavOpen(false)}
+                    openMobile={isMobileNavOpen}
+                  />
                   <Box style={{ width: "100%" }}>
-                    <Header />
+                    <Header onMobileNavOpen={() => setMobileNavOpen(true)} />
                     <ExperimentsSubPage />
                   </Box>
                 </Box>
@@ -97,9 +106,12 @@ const App = () => {
               path="/ExperimentsSub/:id/:subid"
               element={
                 <Box style={{ display: "flex", width: "100%" }}>
-                  <Sidebar />
+                  <Sidebar
+                    onMobileClose={() => setMobileNavOpen(false)}
+                    openMobile={isMobileNavOpen}
+                  />
                   <Box style={{ width: "100%" }}>
-                    <Header />
+                    <Header onMobileNavOpen={() => setMobileNavOpen(true)} />
                     <ExperimentsMachinePage />
                   </Box>
                 </Box>
@@ -109,9 +121,12 @@ const App = () => {
               path="/ExperimentsResult/:id/:subid"
               element={
                 <Box style={{ display: "flex", width: "100%" }}>
-                  <Sidebar />
+                  <Sidebar
+                    onMobileClose={() => setMobileNavOpen(false)}
+                    openMobile={isMobileNavOpen}
+                  />
                   <Box style={{ width: "100%" }}>
-                    <Header />
+                    <Header onMobileNavOpen={() => setMobileNavOpen(true)} />
                     <ExperimentsResultPage />
                   </Box>
                 </Box>
@@ -121,9 +136,12 @@ const App = () => {
               path="/User"
               element={
                 <Box style={{ display: "flex", width: "100%" }}>
-                  <Sidebar />
+                  <Sidebar
+                    onMobileClose={() => setMobileNavOpen(false)}
+                    openMobile={isMobileNavOpen}
+                  />
                   <Box style={{ width: "100%" }}>
-                    <Header />
+                    <Header onMobileNavOpen={() => setMobileNavOpen(true)} />
                     <UserPage />
                   </Box>
                 </Box>
@@ -133,9 +151,12 @@ const App = () => {
               path="/License"
               element={
                 <Box style={{ display: "flex", width: "100%" }}>
-                  <Sidebar />
+                  <Sidebar
+                    onMobileClose={() => setMobileNavOpen(false)}
+                    openMobile={isMobileNavOpen}
+                  />
                   <Box style={{ width: "100%" }}>
-                    <Header />
+                    <Header onMobileNavOpen={() => setMobileNavOpen(true)} />
                     <LicensePage />
                   </Box>
                 </Box>

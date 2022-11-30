@@ -2,6 +2,7 @@ import { Box, Card, CardContent, Grid, TextField, Button } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import Api from "../../../API/API";
+import Hidden from '@mui/material/Hidden';
 
 function SignUpPage() {
   const publicUrl = process.env.PUBLIC_URL;
@@ -95,9 +96,9 @@ function SignUpPage() {
       <Box
         style={{
           width: "60%",
-          height: "100%",
+          height: "100vh",
           position: "absolute",
-          left: "20%",
+          left: "20vw",
           textAlign: "center",
         }}
       >
@@ -105,19 +106,21 @@ function SignUpPage() {
           style={{
             position: "relative",
             top: "25%",
+            width: "100%",
+            height: "30%",
             margin: 0,
             padding: 0,
           }}
         >
           <img
-            style={{ marginBottom: 30 }}
+            style={{ marginBottom: 30, maxWidth: "30vw", height: "5vh" }}
             alt="home icon"
             src={`${publicUrl}/logoLogin.png`}
           />
           <Card style={{ width: "100%" }}>
             <CardContent>
               <Grid container spacing={2}>
-                <Grid item md={6} xs={12}>
+                <Grid item md={6} xs={6}>
                   <TextField
                     fullWidth
                     label="User Id"
@@ -126,7 +129,7 @@ function SignUpPage() {
                     inputProps={{ style: { fontFamily: "GmarketSansMedium" } }}
                   />
                 </Grid>
-                <Grid item md={6} xs={12}>
+                <Grid item md={6} xs={6}>
                   <TextField
                     fullWidth
                     label="Name"
@@ -135,7 +138,7 @@ function SignUpPage() {
                     inputProps={{ style: { fontFamily: "GmarketSansMedium" } }}
                   />
                 </Grid>
-                <Grid item md={6} xs={12}>
+                <Grid item md={6} xs={6}>
                   <TextField
                     fullWidth
                     label="Password"
@@ -145,7 +148,7 @@ function SignUpPage() {
                     inputProps={{ style: { fontFamily: "GmarketSansMedium" } }}
                   />
                 </Grid>
-                <Grid item md={6} xs={12}>
+                <Grid item md={6} xs={6}>
                   <TextField
                     fullWidth
                     label="Password Check"
@@ -155,7 +158,7 @@ function SignUpPage() {
                     inputProps={{ style: { fontFamily: "GmarketSansMedium" } }}
                   />
                 </Grid>
-                <Grid item md={6} xs={12}>
+                <Grid item md={6} xs={6}>
                   <TextField
                     fullWidth
                     label="LicenseKey"
@@ -164,7 +167,7 @@ function SignUpPage() {
                     inputProps={{ style: { fontFamily: "GmarketSansMedium" } }}
                   />
                 </Grid>
-                <Grid item md={6} xs={12}>
+                <Grid item md={6} xs={6}>
                   <TextField
                     fullWidth
                     label="E-mail"
@@ -174,34 +177,91 @@ function SignUpPage() {
                   />
                 </Grid>
                 <Grid item md={12} xs={12}>
-                  <Box style={{ float: "right" }}>
-                    <Button
-                      variant="contained"
-                      style={{
-                        marginRight: 5,
-                        backgroundColor: "#2877b9",
-                        fontFamily: "GmarketSansMedium",
-                      }}
-                      onClick={handlesubmit}
-                    >
-                      Sign Up
-                    </Button>
-                    <Link to="/" style={{ textDecoration: "none" }}>
+                  <Hidden lgUp>
+                    <Box style={{ float: "right" }}>
                       <Button
                         variant="contained"
                         style={{
-                          backgroundColor: "#868e96",
+                          marginRight: 5,
+                          backgroundColor: "#2877b9",
+                          fontFamily: "GmarketSansMedium",
+                          fontSize: 5,
+                          width: 20,
+                          height: 35
+                        }}
+                        onClick={handlesubmit}
+                      >
+                        Sign Up
+                      </Button>
+                      <Link to="/" style={{ textDecoration: "none" }}>
+                        <Button
+                          variant="contained"
+                          style={{
+                            backgroundColor: "#868e96",
+                            fontFamily: "GmarketSansMedium",
+                            fontSize: 5,
+                            width: 20,
+                            height: 35
+                          }}
+                        >
+                          Cancel
+                        </Button>
+                      </Link>
+                    </Box>
+                  </Hidden>
+                  <Hidden lgDown>
+                    <Box style={{ float: "right" }}>
+                      <Button
+                        variant="contained"
+                        style={{
+                          marginRight: 5,
+                          backgroundColor: "#2877b9",
                           fontFamily: "GmarketSansMedium",
                         }}
+                        onClick={handlesubmit}
                       >
-                        Cancel
+                        Sign Up
                       </Button>
-                    </Link>
-                  </Box>
+                      <Link to="/" style={{ textDecoration: "none" }}>
+                        <Button
+                          variant="contained"
+                          style={{
+                            backgroundColor: "#868e96",
+                            fontFamily: "GmarketSansMedium",
+                          }}
+                        >
+                          Cancel
+                        </Button>
+                      </Link>
+                    </Box>
+                  </Hidden>
                 </Grid>
               </Grid>
             </CardContent>
           </Card>
+        </Box>
+        <Box
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            bottom: 20,
+            width: "100%",
+            textAlign: "center",
+          }}
+        >
+          <Hidden mdDown>
+            <h6 style={{ marginBottom: 0, color: "#212529" }}>Version. 1.0.0</h6>
+            <h5 style={{ marginTop: 0, color: "#A7A7A7" }}>
+              Copyright 2020 ⓒ NeuroTx All RIGHT RESERVED
+            </h5>
+          </Hidden>
+          <Hidden mdUp>
+            <h6 style={{ marginBottom: 0, color: "#212529", fontSize: 6 }}>Version. 1.0.0</h6>
+            <h5 style={{ marginTop: 0, color: "#A7A7A7", fontSize: 8 }}>
+              Copyright 2020 ⓒ NeuroTx All RIGHT RESERVED
+            </h5>
+          </Hidden>
         </Box>
       </Box>
     </Box>

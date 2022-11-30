@@ -1,9 +1,12 @@
 import * as React from 'react';
-import { Box, Button, Menu, MenuItem, Modal } from "@mui/material";
+import { Box, Button, Menu, MenuItem, Modal, IconButton } from "@mui/material";
 import { useState } from "react";
 import HeaderModalHeader from '../../molecules/Header/HeaderModalHeader';
 import HeaderModalMiddle from '../../molecules/Header/HeaderModalMiddle';
 import cookie from '../../../API/cookie';
+import Hidden from '@mui/material/Hidden';
+import DehazeIcon from '@mui/icons-material/Dehaze';
+import PropTypes from 'prop-types';
 
 const style = {
   position: "absolute",
@@ -18,7 +21,7 @@ const style = {
   p: 4,
 };
 
-function Header() {
+const Header = ({ onMobileNavOpen }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [openTrue, setOpenTrue] = React.useState(false);
@@ -35,11 +38,11 @@ function Header() {
     setAnchorEl(null);
     setOpenTrue(true);
   };
-  const handleClose2= () => {
+  const handleClose2 = () => {
     setAnchorEl(null);
   };
 
-  const Logout = async() => {
+  const Logout = async () => {
     deleteAllCookies()
     window.location.href = "/";
   }
@@ -63,20 +66,23 @@ function Header() {
           borderBottom: "2px solid #333333",
         }}
       >
+        <IconButton color="inherit" onClick={onMobileNavOpen}>
+          <DehazeIcon style={{ color: "white", marginTop: 18, height: 40, marginLeft: 20 }} />
+        </IconButton>
         <Button
-            style={{
-              float: "right",
-              marginRight: 20,
-              color: "#CCCCCC",
-              borderRadius: 40,
-              backgroundColor: "#393939",
-              height: 40,
-              marginTop: 18,
-              fontFamily: 'GmarketSansMedium'
-            }}
-            onClick={Logout}
-          >
-            Log Out
+          style={{
+            float: "right",
+            marginRight: 20,
+            color: "#CCCCCC",
+            borderRadius: 40,
+            backgroundColor: "#393939",
+            height: 40,
+            marginTop: 18,
+            fontFamily: 'GmarketSansMedium'
+          }}
+          onClick={Logout}
+        >
+          Log Out
         </Button>
         <Button
           id="basic-button"
@@ -108,21 +114,25 @@ function Header() {
             },
           }}
         >
-          <MenuItem onClick={handleClose} style={{fontFamily: 'GmarketSansMedium'}}>Change Password</MenuItem>
+          <MenuItem onClick={handleClose} style={{ fontFamily: 'GmarketSansMedium' }}>Change Password</MenuItem>
         </Menu>
         <Modal
-            open={openTrue}
-            onClose={handleCloseTrue}
-            BackdropProps={{ style: { opacity: 0.2 } }}
-          >
-            <Box sx={style}>
-              <HeaderModalHeader propFunction={handleCloseTrue} />
-              <HeaderModalMiddle propFunction={handleCloseTrue} />
-            </Box>
-          </Modal>
+          open={openTrue}
+          onClose={handleCloseTrue}
+          BackdropProps={{ style: { opacity: 0.2 } }}
+        >
+          <Box sx={style}>
+            <HeaderModalHeader propFunction={handleCloseTrue} />
+            <HeaderModalMiddle propFunction={handleCloseTrue} />
+          </Box>
+        </Modal>
       </Box>
     </>
   );
 }
+
+Header.propTypes = {
+  onMobileNavOpen: PropTypes.func
+};
 
 export default Header;

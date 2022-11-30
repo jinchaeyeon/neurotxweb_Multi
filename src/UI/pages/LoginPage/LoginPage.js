@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Api from "../../../API/API";
 import cookie from "../../../API/cookie";
+import Hidden from '@mui/material/Hidden';
 
 function LoginPage() {
   const publicUrl = process.env.PUBLIC_URL;
@@ -48,7 +49,7 @@ function LoginPage() {
             cookie.setCookie("accessToken", infoBody.data.access_token, 1);
             cookie.setCookie('is_staff', infoBody2.data.is_staff, 1);
           }
-          window.location.href ="/";
+          window.location.href = "/";
         }
         else {
           alert('서버 오류입니다. neurotx@neurotx.org로 연락 주세요');
@@ -70,10 +71,10 @@ function LoginPage() {
     >
       <Box
         style={{
-          width: 381,
+          width: "40%",
           height: "100%",
           position: "absolute",
-          left: "35%",
+          left: "30vw",
           textAlign: "center",
         }}
       >
@@ -81,14 +82,14 @@ function LoginPage() {
           style={{
             position: "relative",
             top: "25%",
-            width: 381,
-            height: 320,
+            width: "100%",
+            height: "30%",
             margin: 0,
             padding: 0,
           }}
         >
           <img
-            style={{ marginBottom: 30 }}
+            style={{ marginBottom: 30, maxWidth: "30vw", height: "5vh" }}
             alt="home icon"
             src={`${publicUrl}/logoLogin.png`}
           />
@@ -147,10 +148,18 @@ function LoginPage() {
             textAlign: "center",
           }}
         >
-          <h6 style={{ marginBottom: 0, color: "#212529" }}>Version. 1.0.0</h6>
-          <h5 style={{ marginTop: 0, color: "#A7A7A7" }}>
-            Copyright 2020 ⓒ NeuroTx All RIGHT RESERVED
-          </h5>
+          <Hidden mdDown>
+            <h6 style={{ marginBottom: 0, color: "#212529" }}>Version. 1.0.0</h6>
+            <h5 style={{ marginTop: 0, color: "#A7A7A7" }}>
+              Copyright 2020 ⓒ NeuroTx All RIGHT RESERVED
+            </h5>
+          </Hidden>
+          <Hidden mdUp>
+            <h6 style={{ marginBottom: 0, color: "#212529", fontSize: 6 }}>Version. 1.0.0</h6>
+            <h5 style={{ marginTop: 0, color: "#A7A7A7", fontSize: 8 }}>
+              Copyright 2020 ⓒ NeuroTx All RIGHT RESERVED
+            </h5>
+          </Hidden>
         </Box>
       </Box>
     </Box>

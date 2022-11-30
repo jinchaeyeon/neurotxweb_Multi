@@ -1,5 +1,5 @@
 {
-  "proxy": "http://35.216.17.203",
+  "proxy": "http://35.216.17.203:8888",
   "name": "neurotx",
   "version": "0.1.0",
   "private": true,
