@@ -1,6 +1,6 @@
 import axios from "axios";
 import cookie from "./cookie";
-const api = "http://35.216.10.53:8888";
+const api = "http://neurotx.co.kr:8888";
 var defaultValue;
 
 let user_id = cookie.getCookie("userAccount")
