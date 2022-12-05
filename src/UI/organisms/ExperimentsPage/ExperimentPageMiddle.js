@@ -227,7 +227,7 @@ export default function ExperimentPageMiddle() {
                   backgroundColor: "#2877b9",
                   marginRight: 5,
                   fontFamily: "GmarketSansMedium",
-                  fontSize: 5,
+                  fontSize: 10,
                   width: 20,
                   height: 35,
                 }}
@@ -242,7 +242,7 @@ export default function ExperimentPageMiddle() {
                 backgroundColor: "#5e646b",
                 marginRight: 5,
                 fontFamily: "GmarketSansMedium",
-                fontSize: 5,
+                fontSize: 10,
                 width: 20,
                 height: 35,
               }}
@@ -269,7 +269,7 @@ export default function ExperimentPageMiddle() {
                 borderRadius: 10,
                 backgroundColor: "#393939",
                 fontFamily: "GmarketSansMedium",
-                fontSize: 5,
+                fontSize: 10,
                 width: 20,
                 height: 35,
               }}
