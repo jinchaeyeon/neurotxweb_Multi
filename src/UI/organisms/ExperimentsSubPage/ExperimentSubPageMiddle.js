@@ -149,10 +149,10 @@ export default function ExperimentSubPageMiddle(props) {
   const handleClose = () => setOpen(false);
 
   const handleOpenProtocol = (row) => {
-    if(listLength == true) {
+    if (listLength == true) {
       alert("프로토콜 리스트의 개수가 초과되었습니다. 새로운 프로토콜을 생성해주세요.")
     }
-    else{
+    else {
       setOpenProtocol(true);
       setState(row);
     }
@@ -202,22 +202,27 @@ export default function ExperimentSubPageMiddle(props) {
     defaultValue
   ) => {
     const getData = async () => {
-      const infoBody = await Api.getAPI_ExperimentSubCreate(
-        name,
-        sex,
-        birthday,
-        maindiagnosis,
-        link,
-        file.name,
-        Experimentsid,
-        defaultValue
-      );
-      if (infoBody != null) {
-        var id = infoBody.data.id;
-        alert("추가되었습니다");
-        window.location.href = `../ExperimentsSub/${Experimentsid}/${id}`;
-      }
-    };
+      if (window.outerWidth < 1100) {
+        alert("모바일은 실험 불가합니다.");
+        window.location.href = `/`;
+      } else {
+        const infoBody = await Api.getAPI_ExperimentSubCreate(
+          name,
+          sex,
+          birthday,
+          maindiagnosis,
+          link,
+          file.name,
+          Experimentsid,
+          defaultValue
+        );
+        if (infoBody != null) {
+          var id = infoBody.data.id;
+          alert("추가되었습니다");
+          window.location.href = `../ExperimentsSub/${Experimentsid}/${id}`;
+        }
+      };
+    }
     getData();
     handleProtocolClose();
   };
@@ -240,115 +245,115 @@ export default function ExperimentSubPageMiddle(props) {
       return (
         <Box>
           <Hidden lgDown>
-          <Link to={`../ExperimentsResult/${Experimentsid}/${row.id}`}>
+            <Link to={`../ExperimentsResult/${Experimentsid}/${row.id}`}>
+              <Button
+                style={{
+                  color: "white",
+                  borderRadius: 10,
+                  backgroundColor: "#2877b9",
+                  marginRight: 5,
+                  fontFamily: "GmarketSansMedium",
+                }}
+              >
+                실험정보
+              </Button>
+            </Link>
             <Button
               style={{
-                color: "white",
+                color: "#CCCCCC",
                 borderRadius: 10,
-                backgroundColor: "#2877b9",
+                backgroundColor: "#5e646b",
                 marginRight: 5,
                 fontFamily: "GmarketSansMedium",
               }}
+              onClick={() => handleOpen(row)}
             >
-              실험정보
+              수정
             </Button>
-          </Link>
-          <Button
-            style={{
-              color: "#CCCCCC",
-              borderRadius: 10,
-              backgroundColor: "#5e646b",
-              marginRight: 5,
-              fontFamily: "GmarketSansMedium",
-            }}
-            onClick={() => handleOpen(row)}
-          >
-            수정
-          </Button>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            BackdropProps={{ style: { opacity: 0.2 } }}
-          >
-            <Box sx={style}>
-              <ExperimentSubPageChangeModalHeader propFunction={handleClose} />
-              <ExperimentSubPageChangeModalMiddle
-                data={state}
-                propFunction={handleProtocol}
-              />
-            </Box>
-          </Modal>
-          <Button
-            style={{
-              color: "#CCCCCC",
-              borderRadius: 10,
-              backgroundColor: "#393939",
-              fontFamily: "GmarketSansMedium",
-            }}
-            onClick={() => handleDeleteAccount(row)}
-          >
-            삭제
-          </Button>
-          </Hidden>
-          <Hidden lgUp>
-          <Link to={`../ExperimentsResult/${Experimentsid}/${row.id}`}>
+            <Modal
+              open={open}
+              onClose={handleClose}
+              BackdropProps={{ style: { opacity: 0.2 } }}
+            >
+              <Box sx={style}>
+                <ExperimentSubPageChangeModalHeader propFunction={handleClose} />
+                <ExperimentSubPageChangeModalMiddle
+                  data={state}
+                  propFunction={handleProtocol}
+                />
+              </Box>
+            </Modal>
             <Button
               style={{
-                color: "white",
+                color: "#CCCCCC",
                 borderRadius: 10,
-                backgroundColor: "#2877b9",
+                backgroundColor: "#393939",
+                fontFamily: "GmarketSansMedium",
+              }}
+              onClick={() => handleDeleteAccount(row)}
+            >
+              삭제
+            </Button>
+          </Hidden>
+          <Hidden lgUp>
+            <Link to={`../ExperimentsResult/${Experimentsid}/${row.id}`}>
+              <Button
+                style={{
+                  color: "white",
+                  borderRadius: 10,
+                  backgroundColor: "#2877b9",
+                  marginRight: 5,
+                  fontFamily: "GmarketSansMedium",
+                  fontSize: 5,
+                  width: 20,
+                  height: 35,
+                }}
+              >
+                실험정보
+              </Button>
+            </Link>
+            <Button
+              style={{
+                color: "#CCCCCC",
+                borderRadius: 10,
+                backgroundColor: "#5e646b",
                 marginRight: 5,
                 fontFamily: "GmarketSansMedium",
                 fontSize: 5,
                 width: 20,
                 height: 35,
               }}
+              onClick={() => handleOpen(row)}
             >
-              실험정보
+              수정
             </Button>
-          </Link>
-          <Button
-            style={{
-              color: "#CCCCCC",
-              borderRadius: 10,
-              backgroundColor: "#5e646b",
-              marginRight: 5,
-              fontFamily: "GmarketSansMedium",
-              fontSize: 5,
-              width: 20,
-              height: 35,
-            }}
-            onClick={() => handleOpen(row)}
-          >
-            수정
-          </Button>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            BackdropProps={{ style: { opacity: 0.2 } }}
-          >
-            <Box sx={style}>
-              <ExperimentSubPageChangeModalHeader propFunction={handleClose} />
-              <ExperimentSubPageChangeModalMiddle
-                data={state}
-                propFunction={handleProtocol}
-              />
-            </Box>
-          </Modal>
-          <Button
-            style={{
-              color: "#CCCCCC",
-              borderRadius: 10,
-              backgroundColor: "#393939",
-              fontFamily: "GmarketSansMedium",
-              fontSize: 5,
-              width: 20,
-              height: 35,
-            }}
-            onClick={() => handleDeleteAccount(row)}
-          >
-            삭제
-          </Button>
+            <Modal
+              open={open}
+              onClose={handleClose}
+              BackdropProps={{ style: { opacity: 0.2 } }}
+            >
+              <Box sx={style}>
+                <ExperimentSubPageChangeModalHeader propFunction={handleClose} />
+                <ExperimentSubPageChangeModalMiddle
+                  data={state}
+                  propFunction={handleProtocol}
+                />
+              </Box>
+            </Modal>
+            <Button
+              style={{
+                color: "#CCCCCC",
+                borderRadius: 10,
+                backgroundColor: "#393939",
+                fontFamily: "GmarketSansMedium",
+                fontSize: 5,
+                width: 20,
+                height: 35,
+              }}
+              onClick={() => handleDeleteAccount(row)}
+            >
+              삭제
+            </Button>
           </Hidden>
         </Box>
       );
@@ -402,7 +407,7 @@ export default function ExperimentSubPageMiddle(props) {
         }
         var agree_txt = "";
         if (item.agree_filename != "") {
-          var api_base_url = "http://localhost:8000";
+          var api_base_url = "http://neurotx.co.kr:8888";
           agree_txt =
             '<a href="' + api_base_url + '/files/' + item.agree_filename + '" target="_blank">' + item.agree_filename + '</a>';
         }
