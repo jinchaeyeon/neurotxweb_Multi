@@ -51,8 +51,8 @@ function ExperimentMachineListPageMiddle(props) {
   const starttime2 = props.starttime2;
   let endtime2;
   setInterval(() => {
-    setTimer(Timer + 1);
-  }, 1000);
+    setTimer(Timer + 30);
+  }, 30000);
   React.useEffect(() => {
     if (starttime2 == undefined) {
       if (!timestatus) {
