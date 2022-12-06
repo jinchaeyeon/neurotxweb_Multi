@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, TextField, Button } from "@mui/material";
+import { Box, TextField, Button, Hidden } from "@mui/material";
 import Api from "../../../API/API";
 import cookie from "../../../API/cookie";
 
@@ -48,9 +48,12 @@ export default function HeaderModalMiddle(props) {
         }}
       >
         <Box style={{ display: "block", height: 37, marginTop: 10 }}>
-          <h4 style={{ display: "inline", paddingLeft: "15%",fontFamily: 'GmarketSansMedium' }}>
-            변경할 비밀번호 :
-          </h4>
+        <Hidden lgUp>
+            <h6 style={{ display: "inline", paddingLeft: "5%", fontFamily: 'GmarketSansMedium' }}>변경할 비밀번호:</h6>
+          </Hidden>
+          <Hidden lgDown>
+            <h4 style={{ display: "inline", paddingLeft: "15%", fontFamily: 'GmarketSansMedium' }}>변경할 비밀번호:</h4>
+          </Hidden>
           <TextField
             value={pw}
             size="small"
@@ -66,9 +69,12 @@ export default function HeaderModalMiddle(props) {
           />
         </Box>
         <Box style={{ display: "block", height: 37, marginTop: 10 }}>
-          <h4 style={{ display: "inline", paddingLeft: "15%",fontFamily: 'GmarketSansMedium' }}>
-            비밀번호 확인 :
-          </h4>
+        <Hidden lgUp>
+            <h6 style={{ display: "inline", paddingLeft: "5%", fontFamily: 'GmarketSansMedium' }}>비밀번호확인:</h6>
+          </Hidden>
+          <Hidden lgDown>
+            <h4 style={{ display: "inline", paddingLeft: "15%", fontFamily: 'GmarketSansMedium' }}>비밀번호확인:</h4>
+          </Hidden>
           <TextField
             value={check}
             size="small"
