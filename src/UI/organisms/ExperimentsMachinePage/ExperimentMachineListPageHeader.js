@@ -84,7 +84,9 @@ function ExperimentMachineListPageHeader(props) {
       .then(function (characteristic) {
         var deviceChar = characteristic;
         const cmd_intense = "910|1";
-        var uint8array_intense = new TextEncoder().encode(cmd_intense)
+        var uint8array_intense2 = new TextEncoder().encode(cmd_intense)
+        deviceChar
+        .writeValueWithoutResponse(uint8array_intense2)
           .then(function (characteristic) {
             var deviceChar = characteristic;
             const cmd_intense = "102|" + sti_intensity;

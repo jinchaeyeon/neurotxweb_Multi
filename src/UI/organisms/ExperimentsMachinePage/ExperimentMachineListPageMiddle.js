@@ -39,6 +39,7 @@ function ExperimentMachineListPageMiddle(props) {
   const datas = props.data;
   const state = props.state;
   const machine = props.machine;
+  console.log(datas);
   const [limit, setLimit] = React.useState([]);
   const signal_names = ["EEG1", "EEG2", "PPG", "X", "Y", "Z"];
   const widths = window.innerWidth * 0.6;

@@ -58,32 +58,8 @@ export default function ExperimentMachinePageMiddle(props) {
               .then(function (characteristic) {
                 var deviceChar = characteristic;
                 const cmd = "910|1";
-
                 var uint8array = new TextEncoder().encode(cmd);
-
-                deviceChar.writeValueWithoutResponse(uint8array)
-                .then(function () {
-                  const cmd_intense = "102|" + 0;
-                  var uint8array_intense = new TextEncoder().encode(cmd_intense);
-                  deviceChar
-                    .writeValueWithoutResponse(uint8array_intense)
-                    .then(function () {
-                      const cmd_interval = "104|" + 0;
-                      var uint8array_interval = new TextEncoder().encode(cmd_interval);
-                      deviceChar
-                        .writeValueWithoutResponse(uint8array_interval)
-                        .then(function () {
-                          const cmd_height = "106|" + 0;
-                          var uint8array_height = new TextEncoder().encode(cmd_height);
-                          deviceChar.writeValueWithoutResponse(uint8array_height)
-                            .then(function () {
-                              const cmd_long = "110|" + 0;
-                              var uint8array_long = new TextEncoder().encode(cmd_long);
-                              deviceChar.writeValueWithoutResponse(uint8array_long);
-                            });
-                          });
-                      });
-                  });
+                deviceChar.writeValueWithoutResponse(uint8array);
               });
 
             return service

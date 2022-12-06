@@ -78,11 +78,10 @@ function ExperimentMachineListPageStimulation(props) {
       .then(function (characteristic) {
         var deviceChar = characteristic;
         const cmd_intense2 = "910|2";
-        var uint8array_intense = new TextEncoder().encode(cmd_intense2);
+        var uint8array_intense2 = new TextEncoder().encode(cmd_intense2);
         deviceChar
-          .writeValueWithoutResponse(uint8array_intense)
-          .then(function (characteristic) {
-            var deviceChar = characteristic;
+          .writeValueWithoutResponse(uint8array_intense2)
+          .then(function () {
             const cmd_intense = "102|" + sti_intensity;
             var uint8array_intense = new TextEncoder().encode(cmd_intense);
             deviceChar
@@ -95,11 +94,13 @@ function ExperimentMachineListPageStimulation(props) {
                   .then(function () {
                     const cmd_height = "106|" + sti_height;
                     var uint8array_height = new TextEncoder().encode(cmd_height);
-                    deviceChar.writeValueWithoutResponse(uint8array_height)
+                    deviceChar
+                    .writeValueWithoutResponse(uint8array_height)
                       .then(function () {
                         const cmd_long = "110|" + sti_long;
                         var uint8array_long = new TextEncoder().encode(cmd_long);
-                        deviceChar.writeValueWithoutResponse(uint8array_long);
+                        deviceChar
+                        .writeValueWithoutResponse(uint8array_long);
                       });
                   });
               });
