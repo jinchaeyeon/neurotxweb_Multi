@@ -32,18 +32,18 @@ const Sidebar = ({ onMobileClose, openMobile }) => {
     }
   }, [location.pathname]);
   const content = (
-    <Box style={{ width: 300, height: "auto", display: "block", backgroundColor: "#333333" }}>
+    <Box style={{ width: 250, height: "auto", display: "block", backgroundColor: "#333333" }}>
       <Box
         style={{
-          justifyContent: "center",
           display: "flex",
           height: 66,
           alignItems: "center",
+          marginLeft: 40
         }}
       >
         <a href="/">
           <img
-            style={{ width: "auto", height: 30, paddingRight: 20 }}
+            style={{ width: "auto", height: 30 }}
             alt="home icon"
             src={`${publicUrl}/logo.png`}
           />
@@ -76,7 +76,7 @@ const Sidebar = ({ onMobileClose, openMobile }) => {
         variant="temporary"
         PaperProps={{
           sx: {
-            width: 200,
+            width: 250,
             display: "block",
             backgroundColor: "#333333"
           }
