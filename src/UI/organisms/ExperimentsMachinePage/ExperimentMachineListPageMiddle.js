@@ -9,6 +9,7 @@ import PlotY from "./PlotY";
 import PlotZ from "./PlotZ";
 import Api from "../../../API/API";
 import cookie from "../../../API/cookie";
+import PlotPPGIR from "./PlotPPGIR";
 
 var g_recv_idx = 800;
 var last = 0;
@@ -39,9 +40,8 @@ function ExperimentMachineListPageMiddle(props) {
   const datas = props.data;
   const state = props.state;
   const machine = props.machine;
-  console.log(datas);
   const [limit, setLimit] = React.useState([]);
-  const signal_names = ["EEG1", "EEG2", "PPG", "X", "Y", "Z"];
+  const signal_names = ["EEG1", "EEG2", "PPG","PPGIR", "X", "Y", "Z"];
   const widths = window.innerWidth * 0.6;
   const [Timer, setTimer] = React.useState(0);
   const [timestatus, settimeStatus] = React.useState(false);
@@ -141,6 +141,7 @@ function ExperimentMachineListPageMiddle(props) {
       "B3_5_EEG1",
       "B6_8_EEG2",
       "B9_11_PPG_avg",
+      "PPGIR",
       "B27_28_X",
       "B29_30_Y",
       "B31_32_Z",
@@ -197,7 +198,16 @@ function ExperimentMachineListPageMiddle(props) {
           limit={limit}
         />
       );
-    } else if (i == 3) {
+    }  else if (i == 3) {
+      return (
+        <PlotPPGIR
+          options={opts}
+          data={datas[0]["PPGIR"]}
+          state={state}
+          limit={limit}
+        />
+      );
+    } else if (i == 4) {
       return (
         <PlotX
           options={opts}
@@ -206,7 +216,7 @@ function ExperimentMachineListPageMiddle(props) {
           limit={limit}
         />
       );
-    } else if (i == 4) {
+    } else if (i == 5) {
       return (
         <PlotY
           options={opts}
@@ -304,6 +314,7 @@ function ExperimentMachineListPageMiddle(props) {
       {roop(3)}
       {roop(4)}
       {roop(5)}
+      {roop(6)}
     </div>
   );
 }

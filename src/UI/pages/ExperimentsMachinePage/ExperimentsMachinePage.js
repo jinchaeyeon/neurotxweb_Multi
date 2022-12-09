@@ -11,7 +11,7 @@ function ExperimentsMachinePage() {
   const [state, setState] = React.useState(false);
   const [mornitoringState, setMornitoringState] = React.useState();
   const [data, setData] = React.useState([
-    { t : 0, B3_5_EEG1: 0, B6_8_EEG2: 0, B9_11_PPG_avg: 0, B27_28_X: 0, B29_30_Y: 0, B31_32_Z: 0 }
+    { t : 0, B3_5_EEG1: 0, B6_8_EEG2: 0, B9_11_PPG_avg: 0, PPGIR: 0 , B27_28_X: 0, B29_30_Y: 0, B31_32_Z: 0 }
   ]);
   const [machine, setMachine] = React.useState();
   const [starttime, setStarttime] = React.useState();
@@ -23,6 +23,7 @@ function ExperimentsMachinePage() {
     B3_5_EEG1,
     B6_8_EEG2,
     B9_11_PPG_avg,
+    PPGIR,
     B27_28_X,
     B29_30_Y,
     B31_32_Z,
@@ -31,7 +32,7 @@ function ExperimentsMachinePage() {
   ) => {
     setState(true);
     setData([
-      { t, B3_5_EEG1, B6_8_EEG2, B9_11_PPG_avg, B27_28_X, B29_30_Y, B31_32_Z },
+      { t, B3_5_EEG1, B6_8_EEG2, B9_11_PPG_avg,PPGIR, B27_28_X, B29_30_Y, B31_32_Z },
     ]);
     setMachine(bluetoothService);
     setStarttime(starttime);

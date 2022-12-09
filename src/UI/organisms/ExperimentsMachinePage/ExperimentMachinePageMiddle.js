@@ -1,15 +1,20 @@
 import * as React from "react";
 import { Button, Paper } from "@mui/material";
+import { CollectionsBookmarkOutlined } from "@mui/icons-material";
 
 var pt;
 var g_recv_idx = 0;
-
+var ir1 = 0;
+var red1 = 0;
+var t1 = 0;
+var ac = 0;
 export default function ExperimentMachinePageMiddle(props) {
   function handleprops(
     t,
     B3_5_EEG1,
     B6_8_EEG2,
     B9_11_PPG_avg,
+    PPGIR,
     B27_28_X,
     B29_30_Y,
     B31_32_Z,
@@ -21,6 +26,7 @@ export default function ExperimentMachinePageMiddle(props) {
       B3_5_EEG1,
       B6_8_EEG2,
       B9_11_PPG_avg,
+      PPGIR,
       B27_28_X,
       B29_30_Y,
       B31_32_Z,
@@ -42,6 +48,94 @@ export default function ExperimentMachinePageMiddle(props) {
     filters: [{ services: [CURRENT_SERVICE_UUID] }],
     optionalServices: ["generic_access"],
   };
+  function detectPeak(time, data) {
+    var peaksTime = [];
+    var peaks = [];
+    peaksTime.push(time);
+    peaks.push(data);
+
+    return {
+      time: peaksTime,
+      peak: peaks
+    };
+  }
+
+  function detectValley(time, data) {
+    var valleyTime = [];
+    var valleys = [];
+    valleyTime.push(time);
+    valleys.push(data);
+    return {
+      time: valleyTime,
+      valley: valleys
+    };
+  }
+
+  var spo21 = 0;
+  function getSpo2(t, ir, red, t1, ir1, red1) {
+      var maxIR = detectPeak(t, ir);
+      var maxRED = detectPeak(t, red);
+      var minIR = detectValley(t, ir);
+      var minRED = detectValley(t, red);
+  
+      var minIR1 = detectValley(t1, ir1);
+      var minRED1 = detectValley(t1, red1);
+  
+      var ACIR = [];
+      var DCIR = [];
+      var ACRED = [];
+      var DCRED = [];
+      var occurTime = [];
+  
+      var x1 = minRED1.time;
+      var y1 = minRED1.valley;
+      var x2 = minRED.time;
+      var y2 = minRED.valley;
+      var x0 = maxRED.time;
+      var y0 = maxRED.peak;
+  
+      var result = getACDC(x1, y1, x2, y2, x0, y0);
+      ACRED.push(result.AC);
+      DCRED.push(result.DC);
+  
+      var x1 = minIR1.time;
+      var y1 = minIR1.valley;
+      var x2 = minIR.time;
+      var y2 = minIR.valley;
+      var x0 = maxIR.time;
+      var y0 = maxIR.peak;
+      var result1 = getACDC(x1, y1, x2, y2, x0, y0);
+      ACIR.push(result1.AC);
+      DCIR.push(result1.DC);
+      var R = ACRED[0] * DCIR[0] / (ACIR[0] * DCRED[0]);
+      //spo2 = (-45.060 * R * R + 30.354 * R + 94.845);
+      if(107 - 17 * R > 100){
+        spo21 = 100;
+      }else{
+        spo21 = 107 - 17 * R;
+      }
+    return spo21;
+  }
+
+  function getACDC(x1, y1, x2, y2, x0, y0) {
+    var y = (y2 - y1) / (x2 - x1) * (x0 - x1) + y1;
+    var last = parseInt(y0);
+    var st = parseInt(y);
+    if(last - st == 0) {
+      return {
+        DC: st,
+        AC: ac
+      };
+    } else {
+      ac = last - st;
+      return {
+        DC: st,
+        AC: ac
+      };
+    }
+
+  }
+
 
   function connectDevice() {
     let starttime = new Date();
@@ -86,6 +180,7 @@ export default function ExperimentMachinePageMiddle(props) {
                         DATA[4] = event.target.value.buffer.slice(132, 165 - 1);
 
                         var B9_11_PPG_avg = 0;
+                        var PPGIR_avg = 0;
                         for (var i = 0; i < DATA.length; i++) {
                           var t = g_recv_idx++;
                           var td = new DataView(DATA[i]);
@@ -130,21 +225,29 @@ export default function ExperimentMachinePageMiddle(props) {
                           var B3_5_EEG1 = td.getInt24(2);
                           var B6_8_EEG2 = td.getInt24(5);
                           var B9_11_PPG = td.getInt24(8);
+                          var PPGIR = td.getInt24(14);
+                          var PPGIR_avg = PPGIR + PPGIR_avg;
                           var B9_11_PPG_avg = B9_11_PPG + B9_11_PPG_avg;
+                          var spo2 = getSpo2(t, PPGIR, B9_11_PPG, t1, ir1, red1);
                           var B27_28_X = td.getUint16(26);
                           var B29_30_Y = td.getUint16(28);
                           var B31_32_Z = td.getUint16(30);
+                          //var spo2 = 104-17*((B9_11_PPG/(B9_11_PPG_avg / DATA.length))/(PPGIR/(PPGIR_avg / DATA.length)));
+                          red1 = B9_11_PPG;
+                          ir1 = PPGIR;
+                          t1 = t;
                         }
                         handleprops(
-                          t,
-                          B3_5_EEG1,
-                          B6_8_EEG2,
-                          parseInt(B9_11_PPG_avg / DATA.length),
-                          B27_28_X,
-                          B29_30_Y,
-                          B31_32_Z,
-                          service,
-                          starttime
+                            t,
+                            B3_5_EEG1,
+                            B6_8_EEG2,
+                            parseInt(B9_11_PPG_avg / DATA.length),
+                            spo2,
+                            B27_28_X,
+                            B29_30_Y,
+                            B31_32_Z,
+                            service,
+                            starttime
                         );
                       }
                       pt = ct;
