@@ -41,7 +41,7 @@ function ExperimentMachineListPageMiddle(props) {
   const state = props.state;
   const machine = props.machine;
   const [limit, setLimit] = React.useState([]);
-  const signal_names = ["EEG1", "EEG2", "PPG","PPGIR", "X", "Y", "Z"];
+  const signal_names = ["EEG1", "EEG2", "PPG","SPO2", "X", "Y", "Z"];
   const widths = window.innerWidth * 0.6;
   const [Timer, setTimer] = React.useState(0);
   const [timestatus, settimeStatus] = React.useState(false);
@@ -141,7 +141,7 @@ function ExperimentMachineListPageMiddle(props) {
       "B3_5_EEG1",
       "B6_8_EEG2",
       "B9_11_PPG_avg",
-      "PPGIR",
+      "SPO2",
       "B27_28_X",
       "B29_30_Y",
       "B31_32_Z",
@@ -202,7 +202,7 @@ function ExperimentMachineListPageMiddle(props) {
       return (
         <PlotPPGIR
           options={opts}
-          data={datas[0]["PPGIR"]}
+          data={datas[0]["SPO2"]}
           state={state}
           limit={limit}
         />
