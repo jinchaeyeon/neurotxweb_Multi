@@ -8,6 +8,11 @@ var ir1 = 0;
 var red1 = 0;
 var t1 = 0;
 var ac = 0;
+var ppg = {
+  time: [], //column "time(second)"
+  RED:   [], //column "RED"
+  IR:  [] //column "IR"
+};
 export default function ExperimentMachinePageMiddle(props) {
   function handleprops(
     t,
@@ -48,12 +53,74 @@ export default function ExperimentMachinePageMiddle(props) {
     filters: [{ services: [CURRENT_SERVICE_UUID] }],
     optionalServices: ["generic_access"],
   };
+
+  function getSpo2(ppg) {
+    var maxIR = detectPeak(ppg.time, ppg.IR);
+    var maxRED = detectPeak(ppg.time, ppg.RED);
+    var minIR = detectValley(ppg.time, ppg.IR);
+    var minRED = detectValley(ppg.time, ppg.RED);
+  
+    var ACIR = [];
+    var DCIR = [];
+    var ACRED = [];
+    var DCRED = [];
+    var occurTime = [];
+  
+    for (var i = 0; i < minRED.time.length - 1; i++) {
+      var x1 = minRED.time[i];
+      var y1 = minRED.valley[i];
+      var x2 = minRED.time[i+1];
+      var y2 = minRED.valley[i+1];
+      var x0 = maxRED.time[i+1];
+      var y0 = maxRED.peak[i+1];
+      var result = getACDC(x1, y1, x2, y2, x0, y0);
+      occurTime.push(x0);
+      ACRED.push(result.AC);
+      DCRED.push(result.DC);
+    }
+  
+    for (var i = 0; i < minIR.time.length - 1; i++) {
+      var x1 = minIR.time[i];
+      var y1 = minIR.valley[i];
+      var x2 = minIR.time[i+1];
+      var y2 = minIR.valley[i+1];
+      var x0 = maxIR.time[i+1];
+      var y0 = maxIR.peak[i+1];
+      var result = getACDC(x1, y1, x2, y2, x0, y0);
+      ACIR.push(result.AC);
+      DCIR.push(result.DC);
+    }
+  
+    var spo2 = 0;
+    var R = 0;
+    var count = 0;
+    for (var i = 0; i < ACRED.length; i++) {
+      if(isNaN((ACRED[i] * DCIR[i]) / (ACIR[i] * DCRED[i]), NaN) == false) {
+        R = (ACRED[i] * DCIR[i]) / (ACIR[i] * DCRED[i]);
+      }
+      var sum = -45.060 * R * R + 30.354 * R + 94.845;
+      if(sum > 86) {
+        count++;
+        spo2 += sum;
+      }
+    }
+    spo2 = spo2/count;
+    if(isNaN(spo2, NaN) == true) {
+      return 0;
+    }
+    return spo2;
+  }
+  
   function detectPeak(time, data) {
     var peaksTime = [];
     var peaks = [];
-    peaksTime.push(time);
-    peaks.push(data);
 
+    for (var i = 1; i < data.length; i++) {
+      if (i+1 < data.length && data[i-1] < data[i] && data[i] > data[i+1]) {
+        peaksTime.push(time[i]);
+        peaks.push(data[i]);
+      }
+    }
     return {
       time: peaksTime,
       peak: peaks
@@ -61,84 +128,27 @@ export default function ExperimentMachinePageMiddle(props) {
   }
 
   function detectValley(time, data) {
-    var valleyTime = [];
-    var valleys = [];
-    valleyTime.push(time);
-    valleys.push(data);
+  var valleyTime = [];
+  var valleys = [];
+    for (var i = 1; i < data.length; i++) {
+      if (i+1 < data.length && data[i-1] > data[i] && data[i] < data[i+1]) {
+        valleyTime.push(time[i]);
+        valleys.push(data[i]);
+      }
+    }
     return {
       time: valleyTime,
       valley: valleys
     };
   }
-
-  var spo21 = 0;
-  function getSpo2(t, ir, red, t1, ir1, red1) {
-      var maxIR = detectPeak(t, ir);
-      var maxRED = detectPeak(t, red);
-      var minIR = detectValley(t, ir);
-      var minRED = detectValley(t, red);
   
-      var minIR1 = detectValley(t1, ir1);
-      var minRED1 = detectValley(t1, red1);
-  
-      var ACIR = [];
-      var DCIR = [];
-      var ACRED = [];
-      var DCRED = [];
-      var occurTime = [];
-  
-      var x1 = minRED1.time;
-      var y1 = minRED1.valley;
-      var x2 = minRED.time;
-      var y2 = minRED.valley;
-      var x0 = maxRED.time;
-      var y0 = maxRED.peak;
-  
-      var result = getACDC(x1, y1, x2, y2, x0, y0);
-      ACRED.push(result.AC);
-      DCRED.push(result.DC);
-  
-      var x1 = minIR1.time;
-      var y1 = minIR1.valley;
-      var x2 = minIR.time;
-      var y2 = minIR.valley;
-      var x0 = maxIR.time;
-      var y0 = maxIR.peak;
-      var result1 = getACDC(x1, y1, x2, y2, x0, y0);
-      ACIR.push(result1.AC);
-      DCIR.push(result1.DC);
-
-      var R = (ACRED[0] * DCIR[0]) / (ACIR[0] * DCRED[0]);
-      if(isNaN(R, NaN) == false) {
-        if(107 - 17 * R > 100){
-          spo21 = 100;
-        }else{
-          spo21 = 107 - 17 * R;
-        }
-      } else {
-        return spo21;
-      }
-    return spo21;
-  }
-
   function getACDC(x1, y1, x2, y2, x0, y0) {
-    var y = (y2 - y1) / (x2 - x1) * (x0 - x1) + y1;
-    var last = parseInt(y0);
-    var st = parseInt(y);
-    if(last - st == 0) {
-      return {
-        DC: st,
-        AC: ac
-      };
-    } else {
-      ac = last - st;
-      return {
-        DC: st,
-        AC: ac
-      };
-    }
+    var y = (y2-y1) / (x2-x1) * (x0-x1) + y1;
+    return {
+      DC: y,
+      AC: y0 - y
+    };
   }
-
 
   function connectDevice() {
     let starttime = new Date();
@@ -184,7 +194,7 @@ export default function ExperimentMachinePageMiddle(props) {
 
                         var B9_11_PPG_avg = 0;
                         var PPGIR_avg = 0;
-                        for (var i = 0; i < DATA.length; i++) {
+                        for (var i = 0; i < 1; i++) {
                           var t = g_recv_idx++;
                           var td = new DataView(DATA[i]);
 
@@ -231,7 +241,11 @@ export default function ExperimentMachinePageMiddle(props) {
                           var PPGIR = td.getInt24(14);
                           var PPGIR_avg = PPGIR + PPGIR_avg;
                           var B9_11_PPG_avg = B9_11_PPG + B9_11_PPG_avg;
-                          var spo2 = getSpo2(t, PPGIR, B9_11_PPG, t1, ir1, red1);
+                          //var spo2 = getSpo2(t, PPGIR, B9_11_PPG, t1, ir1, red1);
+                          ppg.RED.push(B9_11_PPG);
+                          ppg.time.push(t);
+                          ppg.IR.push(PPGIR);
+                          var spo2 = getSpo2(ppg);
                           var B27_28_X = td.getUint16(26);
                           var B29_30_Y = td.getUint16(28);
                           var B31_32_Z = td.getUint16(30);
