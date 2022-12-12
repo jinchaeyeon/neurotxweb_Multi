@@ -23,7 +23,7 @@ function ExperimentsMachinePage() {
     B3_5_EEG1,
     B6_8_EEG2,
     B9_11_PPG_avg,
-    PPGIR,
+    SPO2,
     B27_28_X,
     B29_30_Y,
     B31_32_Z,
@@ -32,7 +32,7 @@ function ExperimentsMachinePage() {
   ) => {
     setState(true);
     setData([
-      { t, B3_5_EEG1, B6_8_EEG2, B9_11_PPG_avg,PPGIR, B27_28_X, B29_30_Y, B31_32_Z },
+      { t, B3_5_EEG1, B6_8_EEG2, B9_11_PPG_avg, SPO2, B27_28_X, B29_30_Y, B31_32_Z },
     ]);
     setMachine(bluetoothService);
     setStarttime(starttime);

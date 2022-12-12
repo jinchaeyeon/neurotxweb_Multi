@@ -14,7 +14,7 @@ export default function ExperimentMachinePageMiddle(props) {
     B3_5_EEG1,
     B6_8_EEG2,
     B9_11_PPG_avg,
-    PPGIR,
+    SPO2,
     B27_28_X,
     B29_30_Y,
     B31_32_Z,
@@ -26,7 +26,7 @@ export default function ExperimentMachinePageMiddle(props) {
       B3_5_EEG1,
       B6_8_EEG2,
       B9_11_PPG_avg,
-      PPGIR,
+      SPO2,
       B27_28_X,
       B29_30_Y,
       B31_32_Z,
@@ -107,33 +107,26 @@ export default function ExperimentMachinePageMiddle(props) {
       var result1 = getACDC(x1, y1, x2, y2, x0, y0);
       ACIR.push(result1.AC);
       DCIR.push(result1.DC);
-      var R = ACRED[0] * DCIR[0] / (ACIR[0] * DCRED[0]);
-      //spo2 = (-45.060 * R * R + 30.354 * R + 94.845);
-      if(107 - 17 * R > 100){
-        spo21 = 100;
-      }else{
-        spo21 = 107 - 17 * R;
+
+      var R = (ACRED[0] * DCIR[0]) / (ACIR[0] * DCRED[0]);
+      if(isNaN(R, NaN) == false) {
+        if(107 - 17 * R > 100){
+          spo21 = 100;
+        }else{
+          spo21 = 107 - 17 * R;
+        }
+      } else {
+        return spo21;
       }
     return spo21;
   }
 
   function getACDC(x1, y1, x2, y2, x0, y0) {
     var y = (y2 - y1) / (x2 - x1) * (x0 - x1) + y1;
-    var last = parseInt(y0);
-    var st = parseInt(y);
-    if(last - st == 0) {
-      return {
-        DC: st,
-        AC: ac
-      };
-    } else {
-      ac = last - st;
-      return {
-        DC: st,
-        AC: ac
-      };
-    }
-
+    return {
+        DC: y,
+        AC: y0 -y
+    };
   }
 
 
@@ -232,7 +225,6 @@ export default function ExperimentMachinePageMiddle(props) {
                           var B27_28_X = td.getUint16(26);
                           var B29_30_Y = td.getUint16(28);
                           var B31_32_Z = td.getUint16(30);
-                          //var spo2 = 104-17*((B9_11_PPG/(B9_11_PPG_avg / DATA.length))/(PPGIR/(PPGIR_avg / DATA.length)));
                           red1 = B9_11_PPG;
                           ir1 = PPGIR;
                           t1 = t;
