@@ -123,10 +123,20 @@ export default function ExperimentMachinePageMiddle(props) {
 
   function getACDC(x1, y1, x2, y2, x0, y0) {
     var y = (y2 - y1) / (x2 - x1) * (x0 - x1) + y1;
-    return {
-        DC: y,
-        AC: y0 -y
-    };
+    var last = parseInt(y0);
+    var st = parseInt(y);
+    if(last - st == 0) {
+      return {
+        DC: st,
+        AC: ac
+      };
+    } else {
+      ac = last - st;
+      return {
+        DC: st,
+        AC: ac
+      };
+    }
   }
 
 
