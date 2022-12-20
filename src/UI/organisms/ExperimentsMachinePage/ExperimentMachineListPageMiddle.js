@@ -10,6 +10,7 @@ import PlotZ from "./PlotZ";
 import Api from "../../../API/API";
 import cookie from "../../../API/cookie";
 import PlotPPGIR from "./PlotPPGIR";
+import { CSVLink, CSVDownload } from "react-csv";
 
 var g_recv_idx = 800;
 var last = 0;
@@ -35,7 +36,7 @@ if (user_id) {
     key: api_token,
   };
 }
-
+var testData = [];
 function ExperimentMachineListPageMiddle(props) {
   const datas = props.data;
   const state = props.state;
@@ -51,6 +52,25 @@ function ExperimentMachineListPageMiddle(props) {
   const [timestatus2, settimeStatus2] = React.useState(false);
   const starttime2 = props.starttime2;
   let endtime2;
+  const headers = [
+    { label: "Time", key: "Time" },
+    { label: "EEG1",  key: "EEG1" },
+    { label: "EEG2",  key: "EEG2" },
+    { label: "PPG", key: "PPG" },
+    { label: "x", key: "x" },
+    { label: "y", key: "y" },
+    { label: "z", key: "z" }
+  ];
+  testData.push({
+    Time: datas[0].t,
+    EEG1: datas[0].B3_5_EEG1,
+    EEG2: datas[0].B6_8_EEG2,
+    PPG: datas[0].B9_11_PPG_avg,
+    x: datas[0].B27_28_X,
+    y: datas[0].B29_30_Y,
+    z: datas[0].B31_32_Z
+   },
+  );
   setInterval(() => {
     setTimer(Timer + 30);
   }, 30000);
@@ -308,6 +328,9 @@ function ExperimentMachineListPageMiddle(props) {
   }
   return (
     <div id="chartlist" style={{ width: "100%", height: "auto" }}>
+<CSVLink data={testData} headers={headers}>
+<button>DownLoad CSV</button> 
+</CSVLink>;
       {roop(0)}
       {roop(1)}
       {roop(2)}

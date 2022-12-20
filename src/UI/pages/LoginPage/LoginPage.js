@@ -15,25 +15,20 @@ function LoginPage() {
   const handleChangePW = (event) => {
     setPW(event.target.value);
   };
-  function deleteAllCookies() {
-    const cookies = document.cookie.split(';')
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i]
-      const eqPos = cookie.indexOf('=')
-      const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie
-      document.cookie = name + '=;max-age=0'
-    }
-  }
   const handlesubmit = async () => {
     const getData = async () => {
       const infoBody = await Api.getAPI_AccountLogin_Syns(ID, PW);
       if (infoBody != null) {
         const infoBody2 = await Api.getUserData(infoBody.data.access_token);
         if (infoBody2.status == 200) {
-          if (cookie.getCookie('accessToken') != "") {
-            if (cookie.getCookie('accessToken') != infoBody.data.access_token) {
-              deleteAllCookies();
-              cookie.setCookie("is_Login", 0, 1);
+            if (infoBody.data.token_type == "bearer") {
+              alert("중복로그인 입니다. 다시 로그인해주세요.")
+              cookie.deleteCookie("is_Login");
+              cookie.deleteCookie("userAccount");
+              cookie.deleteCookie("userID");
+              cookie.deleteCookie("accessToken");
+              cookie.deleteCookie('is_staff');
+              cookie.setCookie("is_Login", 2, 1);
             } else {
               cookie.setCookie("is_Login", 1, 1);
               cookie.setCookie("userAccount", ID, 1);
@@ -41,14 +36,6 @@ function LoginPage() {
               cookie.setCookie("accessToken", infoBody.data.access_token, 1);
               cookie.setCookie('is_staff', infoBody2.data.is_staff, 1);
             }
-          }
-          else {
-            cookie.setCookie("is_Login", 1, 1);
-            cookie.setCookie("userAccount", ID, 1);
-            cookie.setCookie("userID", infoBody2.data.id, 1);
-            cookie.setCookie("accessToken", infoBody.data.access_token, 1);
-            cookie.setCookie('is_staff', infoBody2.data.is_staff, 1);
-          }
           window.location.href = "/";
         }
         else {

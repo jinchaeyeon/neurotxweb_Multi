@@ -215,6 +215,7 @@ const Api = {
       id: UserID,
       is_staff: button,
     });
+    console.log(data);
     return await patchJsonReqest(`/users/`, data, defaultValue);
   },
   getAPI_UserDelete: async (UserID, defaultValue) => {

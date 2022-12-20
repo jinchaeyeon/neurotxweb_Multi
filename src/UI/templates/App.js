@@ -21,13 +21,12 @@ const App = () => {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
   var user_id = cookie.getCookie("userAccount");
   setInterval(() => {
-      if (cookie.getCookie("is_Login") == 0 && cookie.getCookie("userAccount") != "") {
+      if (cookie.getCookie("is_Login") == 2) {
         alert("중복 로그인입니다. 다시 로그인 해주세요.");
-        cookie.deleteCookie();
         cookie.setCookie("is_Login", 1, 1);
         window.location.href = "/";
       }
-  }, 1000);
+  }, 2000);
   return (
     <>
       <div className="App">

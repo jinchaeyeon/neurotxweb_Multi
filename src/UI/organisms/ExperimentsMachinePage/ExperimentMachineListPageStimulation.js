@@ -48,15 +48,15 @@ function ExperimentMachineListPageStimulation(props) {
   };
 
   const handleup1 = () => {
-    AddStimulus(250, 50, 400, 100, 15);
+    AddStimulus(250, 4, 3500, 40, 15);
   };
 
   const handleup2 = () => {
-    AddStimulus(250, 50, 200, 100, 15);
+    AddStimulus(250, 4, 3000, 40, 15);
   };
 
   const handleup3 = () => {
-    AddStimulus(250, 50, 100, 100, 15);
+    AddStimulus(250, 4, 0, 40, 15);
   };
 
   React.useEffect(() => {

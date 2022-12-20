@@ -4,9 +4,9 @@ import { useState } from "react";
 import HeaderModalHeader from '../../molecules/Header/HeaderModalHeader';
 import HeaderModalMiddle from '../../molecules/Header/HeaderModalMiddle';
 import cookie from '../../../API/cookie';
-import Hidden from '@mui/material/Hidden';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import PropTypes from 'prop-types';
+import Api from "../../../API/API";
 
 const style = {
   position: "absolute",
@@ -43,19 +43,14 @@ const Header = ({ onMobileNavOpen }) => {
   };
 
   const Logout = async () => {
-    deleteAllCookies()
+    cookie.deleteCookie("userAccount");
+    cookie.deleteCookie("userID");
+    cookie.deleteCookie("accessToken");
+    cookie.deleteCookie('is_staff');
+    cookie.setCookie("is_Login", 0, 1);
     window.location.href = "/";
   }
 
-  function deleteAllCookies() {
-    const cookies = document.cookie.split(';')
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i]
-      const eqPos = cookie.indexOf('=')
-      const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie
-      document.cookie = name + '=;max-age=0'
-    }
-  }
   return (
     <>
       <Box

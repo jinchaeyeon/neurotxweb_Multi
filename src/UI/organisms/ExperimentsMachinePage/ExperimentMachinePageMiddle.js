@@ -232,26 +232,21 @@ export default function ExperimentMachinePageMiddle(props) {
                             td.getUint8(30),
                             td.getUint8(31),
                           ]);
-
+ 
                           var B1 = td.getUint8(0);
                           var B2_SAMPLENUM = td.getUint8(1);
-                          var B3_5_EEG1 = td.getInt24(2);
-                          var B6_8_EEG2 = td.getInt24(5);
-                          var B9_11_PPG = td.getInt24(8);
-                          var PPGIR = td.getInt24(14);
-                          var PPGIR_avg = PPGIR + PPGIR_avg;
+                          var B3_5_EEG1 = td.getInt24(2); //EEG1
+                          var B6_8_EEG2 = td.getInt24(5); //EEG2
+                          var B9_11_PPG = td.getInt24(8); //PPGRED
+                          var PPGIR = td.getInt24(14); //PPGIR
                           var B9_11_PPG_avg = B9_11_PPG + B9_11_PPG_avg;
-                          //var spo2 = getSpo2(t, PPGIR, B9_11_PPG, t1, ir1, red1);
                           ppg.RED.push(B9_11_PPG);
                           ppg.time.push(t);
                           ppg.IR.push(PPGIR);
-                          var spo2 = getSpo2(ppg);
-                          var B27_28_X = td.getUint16(26);
-                          var B29_30_Y = td.getUint16(28);
-                          var B31_32_Z = td.getUint16(30);
-                          red1 = B9_11_PPG;
-                          ir1 = PPGIR;
-                          t1 = t;
+                          var spo2 = getSpo2(ppg); 
+                          var B27_28_X = td.getUint16(26); //모션센서 X
+                          var B29_30_Y = td.getUint16(28); //모션센서 Y
+                          var B31_32_Z = td.getUint16(30); //모션센서 Z
                         }
                         handleprops(
                             t,
