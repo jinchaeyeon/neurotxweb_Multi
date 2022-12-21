@@ -17,11 +17,11 @@ const WRITE_UUID = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
 
 function ExperimentMachineListPageStimulation(props) {
   const machine = props.machine;
-  const [valueWidth, setValueWidth] = React.useState(300);
-  const [valueDuration, setValueDuration] = React.useState(200);
-  const [valueAmplitude, setValueAmplitude] = React.useState(4095);
-  const [valueTime, setValueTime] = React.useState(300);
-  const [valueLimit, setValueLimit] = React.useState(30);
+  const [valueWidth, setValueWidth] = React.useState(0);
+  const [valueDuration, setValueDuration] = React.useState(20);
+  const [valueAmplitude, setValueAmplitude] = React.useState(0);
+  const [valueTime, setValueTime] = React.useState(0);
+  const [valueLimit, setValueLimit] = React.useState(15);
 
   const handleWidthSliderChange = (event, newValue) => {
     setValueWidth(newValue);
@@ -36,33 +36,33 @@ function ExperimentMachineListPageStimulation(props) {
   };
 
   const handleTimeSliderChange = (event, newValue) => {
+    if (newValue == 0) {
+      newValue = valueDuration;
+    }
     setValueTime(newValue);
   };
+
 
   const handleLimitSliderChange = (event, newValue) => {
     setValueLimit(newValue);
   };
 
   const handleup = () => {
-    AddStimulus(valueWidth, valueDuration, valueAmplitude, valueTime, valueLimit);
-  };
-
-  const handleup1 = () => {
-    AddStimulus(250, 4, 3500, 40, 15);
+    AddStimulus(valueAmplitude, valueWidth, valueDuration, valueTime, valueLimit);
   };
 
   const handleup2 = () => {
-    AddStimulus(250, 4, 3000, 40, 15);
+    AddStimulus(2047.5, 50, 200, 200, 15);
   };
 
   const handleup3 = () => {
-    AddStimulus(250, 4, 0, 40, 15);
+    AddStimulus(4095, 50, 200, 200, 15);
   };
 
   React.useEffect(() => {
-  }, []);
+  }, [valueAmplitude, valueWidth, valueDuration, valueTime, valueLimit]);
 
-  function AddStimulus(width, duration, Amplitude, Time, limit) {
+ function AddStimulus(Amplitude, width, duration, Time, limit) {
     var sti_intensity = width;
     sti_intensity = parseInt(sti_intensity);
     var sti_interval = duration;
@@ -94,127 +94,63 @@ function ExperimentMachineListPageStimulation(props) {
                   .then(function () {
                     const cmd_height = "106|" + sti_height;
                     var uint8array_height = new TextEncoder().encode(cmd_height);
-                    deviceChar
-                    .writeValueWithoutResponse(uint8array_height)
+                    deviceChar.writeValueWithoutResponse(uint8array_height)
                       .then(function () {
                         const cmd_long = "110|" + sti_long;
                         var uint8array_long = new TextEncoder().encode(cmd_long);
-                        deviceChar
-                        .writeValueWithoutResponse(uint8array_long);
+                        deviceChar.writeValueWithoutResponse(uint8array_long);
                       });
                   });
               });
           });
       });
-
     alert("자극 전달 완료");
     props.propFunction2(true);
-    props.propFunction3(new Date(), valueLimit);
-  }
-
-  function widthValue() {
-    if (valueWidth == 0) {
-      return 0;
-    } else if (valueWidth == 30) {
-      return 1;
-    } else if (valueWidth == 60) {
-      return 2;
-    } else if (valueWidth == 90) {
-      return 3;
-    } else if (valueWidth == 120) {
-      return 4;
-    } else if (valueWidth == 150) {
-      return 5;
-    } else if (valueWidth == 180) {
-      return 6;
-    } else if (valueWidth == 210) {
-      return 7;
-    } else if (valueWidth == 240) {
-      return 8;
-    } else if (valueWidth == 270) {
-      return 9;
-    } else {
-      return 10;
-    }
-  }
-
-  function widthDuration() {
-    if (valueDuration == 0) {
-      return 0;
-    } else if (valueDuration == 20) {
-      return 1;
-    } else if (valueDuration == 40) {
-      return 2;
-    } else if (valueDuration == 60) {
-      return 3;
-    } else if (valueDuration == 80) {
-      return 4;
-    } else if (valueDuration == 100) {
-      return 5;
-    } else if (valueDuration == 120) {
-      return 6;
-    } else if (valueDuration == 140) {
-      return 7;
-    } else if (valueDuration == 160) {
-      return 8;
-    } else if (valueDuration == 180) {
-      return 9;
-    } else {
-      return 10;
-    }
+    props.propFunction3(new Date(), limit);
   }
 
   function widthAmplitude() {
     if (valueAmplitude == 0) {
-      return 0;
+      return "0mA";
     } else if (valueAmplitude == 409.5) {
-      return 1;
+      return "0.1mA";
     } else if (valueAmplitude == 819) {
-      return 2;
+      return "0.2mA";
     } else if (valueAmplitude == 1228.5) {
-      return 3;
+      return "0.3mA";
     } else if (valueAmplitude == 1638) {
-      return 4;
+      return "0.4mA";
     } else if (valueAmplitude == 2047.5) {
-      return 5;
+      return "0.5mA";
     } else if (valueAmplitude == 2457) {
-      return 6;
+      return "0.6mA";
     } else if (valueAmplitude == 2866.5) {
-      return 7;
+      return "0.7mA";
     } else if (valueAmplitude == 3276) {
-      return 8;
+      return "0.8mA";
     } else if (valueAmplitude == 3685.5) {
-      return 9;
+      return "0.9mA";
     } else {
-      return 10;
+      return "1.0mA";;
     }
   }
 
   function widthTime() {
-    if (valueTime == 0) {
-      return 0;
-    } else if (valueWidth == 30) {
-      return 1;
-    } else if (valueTime == 60) {
-      return 2;
-    } else if (valueTime == 90) {
-      return 3;
-    } else if (valueTime == 120) {
-      return 4;
-    } else if (valueTime == 150) {
-      return 5;
-    } else if (valueTime == 180) {
-      return 6;
-    } else if (valueTime == 210) {
-      return 7;
-    } else if (valueTime == 240) {
-      return 8;
-    } else if (valueTime == 270) {
-      return 9;
+    if (valueTime == valueDuration) {
+      return "Off";
+    } else if (valueTime == 500) {
+      return "500ms";
+    } else if (valueTime == 1000) {
+      return "1000ms";
+    } else if (valueTime == 1500) {
+      return "1500ms";
+    } else if (valueTime == 2000) {
+      return "2000ms";
     } else {
-      return 10;
+      return "2500ms";
     }
   }
+
 
   return (
     <Paper
@@ -229,37 +165,7 @@ function ExperimentMachineListPageStimulation(props) {
             marginRight: "5%",
             marginLeft: "5%",
           }}
-        >
-          <Box>
-            <h4
-              style={{
-                marginTop: 0,
-                marginBottom: 5,
-                fontFamily: "GmarketSansMedium",
-              }}
-            >
-              width
-            </h4>
-            <Grid container spacing={2} alignItems="center">
-              <Grid item>
-                <VolumeUp />
-              </Grid>
-              <Grid item xs>
-                <Slider
-                  value={typeof valueWidth === "number" ? valueWidth : 0}
-                  onChange={handleWidthSliderChange}
-                  aria-labelledby="input-slider"
-                  min={0}
-                  max={300}
-                  step={30}
-                />
-              </Grid>
-              <Grid item>
-                <h3>{widthValue()}</h3>
-              </Grid>
-            </Grid>
-          </Box>
-          <Box>
+        ><Box>
             <h4
               style={{
                 marginTop: 5,
@@ -267,7 +173,7 @@ function ExperimentMachineListPageStimulation(props) {
                 fontFamily: "GmarketSansMedium",
               }}
             >
-              Duration (mS)
+              진폭 (Amplitude, mA)
             </h4>
             <Grid container spacing={2} alignItems="center">
               <Grid item>
@@ -275,42 +181,13 @@ function ExperimentMachineListPageStimulation(props) {
               </Grid>
               <Grid item xs>
                 <Slider
-                  value={typeof valueDuration === "number" ? valueDuration : 0}
-                  onChange={handleDurationSliderChange}
-                  aria-labelledby="input-slider"
-                  min={0}
-                  max={200}
-                  step={20}
-                />
-              </Grid>
-              <Grid item>
-                <h3>{widthDuration()}</h3>
-              </Grid>
-            </Grid>
-          </Box>
-          <Box>
-            <h4
-              style={{
-                marginTop: 5,
-                marginBottom: 5,
-                fontFamily: "GmarketSansMedium",
-              }}
-            >
-              Amplitude (mA)
-            </h4>
-            <Grid container spacing={2} alignItems="center">
-              <Grid item>
-                <VolumeUp />
-              </Grid>
-              <Grid item xs>
-                <Slider
-                  value={typeof valueAmplitude === "number" ? valueAmplitude : 0}
-                  onChange={handleAmplitudeSliderChange}
-                  aria-labelledby="input-slider"
-                  min={0}
-                  max={4095}
-                  step={409.5}
-                />
+                    value={typeof valueAmplitude === "number" ? valueAmplitude : 0}
+                    onChange={handleAmplitudeSliderChange}
+                    aria-labelledby="input-slider"
+                    min={0}
+                    max={3700}
+                    step={409.5}
+                  />
               </Grid>
               <Grid item>
                 <h3>{widthAmplitude()}</h3>
@@ -320,12 +197,12 @@ function ExperimentMachineListPageStimulation(props) {
           <Box>
             <h4
               style={{
-                marginTop: 5,
+                marginTop: 0,
                 marginBottom: 5,
                 fontFamily: "GmarketSansMedium",
               }}
             >
-              Time (mS)
+              파형폭 (Phase width, µs)
             </h4>
             <Grid container spacing={2} alignItems="center">
               <Grid item>
@@ -333,13 +210,71 @@ function ExperimentMachineListPageStimulation(props) {
               </Grid>
               <Grid item xs>
                 <Slider
-                  value={typeof valueTime === "number" ? valueTime : 0}
-                  onChange={handleTimeSliderChange}
-                  aria-labelledby="input-slider"
-                  min={0}
-                  max={300}
-                  step={30}
-                />
+                    value={typeof valueWidth === "number" ? valueWidth : 0}
+                    onChange={handleWidthSliderChange}
+                    aria-labelledby="input-slider"
+                    min={0}
+                    max={300}
+                    step={50}
+                  />
+              </Grid>
+              <Grid item>
+                <h3>{valueWidth}µs</h3>
+              </Grid>
+            </Grid>
+          </Box>
+          <Box>
+            <h4
+              style={{
+                marginTop: 5,
+                marginBottom: 5,
+                fontFamily: "GmarketSansMedium",
+              }}
+            >
+              주기 (Pulse duration, ms)
+            </h4>
+            <Grid container spacing={2} alignItems="center">
+              <Grid item>
+                <VolumeUp />
+              </Grid>
+              <Grid item xs>
+                <Slider
+                    value={typeof valueDuration === "number" ? valueDuration : 0}
+                    onChange={handleDurationSliderChange}
+                    aria-labelledby="input-slider"
+                    min={20}
+                    max={200}
+                    step={20}
+                  />
+              </Grid>
+              <Grid item>
+                <h3>{valueDuration}ms</h3>
+              </Grid>
+            </Grid>
+          </Box>
+          <Box>
+            <h4
+              style={{
+                marginTop: 5,
+                marginBottom: 5,
+                fontFamily: "GmarketSansMedium",
+              }}
+            >
+              꺼짐 간격 (Off-time, ms)
+            </h4>
+            <Grid container spacing={2} alignItems="center">
+              <Grid item>
+                <VolumeUp />
+              </Grid>
+              <Grid item xs>
+                <Slider
+                    value={typeof valueTime === "number" ? valueTime : 0}
+                    onChange={handleTimeSliderChange}
+                    aria-labelledby="input-slider"
+                    min={0}
+                    max={2500}
+                    step={500}
+                  />
               </Grid>
               <Grid item>
                 <h3>{widthTime()}</h3>
@@ -354,24 +289,24 @@ function ExperimentMachineListPageStimulation(props) {
                 fontFamily: "GmarketSansMedium",
               }}
             >
-              limit (m)
+              타이머 (Timer, min)
             </h4>
             <Grid container spacing={2} alignItems="center">
               <Grid item>
                 <VolumeUp />
               </Grid>
               <Grid item xs>
-                <Slider
-                  value={typeof valueLimit === "number" ? valueLimit : 0}
-                  onChange={handleLimitSliderChange}
-                  aria-labelledby="input-slider"
-                  min={5}
-                  max={30}
-                  step={5}
-                />
+ <Slider
+                    value={typeof valueLimit === "number" ? valueLimit : 0}
+                    onChange={handleLimitSliderChange}
+                    aria-labelledby="input-slider"
+                    min={15}
+                    max={60}
+                    step={15}
+                  />
               </Grid>
               <Grid item>
-                <h3>{valueLimit}</h3>
+                <h3>{valueLimit}min</h3>
               </Grid>
             </Grid>
           </Box>
@@ -384,22 +319,22 @@ function ExperimentMachineListPageStimulation(props) {
                 <Card sx={{ width: "90%", backgroundColor: "#393939" }}>
                   <CardContent>
                     <Typography sx={{ fontSize: 20, fontFamily: "GmarketSansMedium" }} color="white" >
-                      1번
+                      자율조절 모드
                     </Typography>
                     <Typography sx={{ mb: 1, fontSize: 13, fontFamily: "GmarketSansMedium" }} color="white">
-                      width: 250
+                      진폭 (Amplitude, mA): {widthAmplitude()}
                     </Typography>
                     <Typography sx={{ mb: 1, fontSize: 13, fontFamily: "GmarketSansMedium" }} color="white">
-                      duration: 50
+                      파형폭 (phase width, µs): {valueWidth}µs
                     </Typography>
                     <Typography sx={{ mb: 1, fontSize: 13, fontFamily: "GmarketSansMedium" }} color="white">
-                      amplitude: 400
+                      주기 (pulse duration, ms): {valueDuration}ms
                     </Typography>
                     <Typography sx={{ mb: 1, fontSize: 13, fontFamily: "GmarketSansMedium" }} color="white">
-                      Time: 100
+                      꺼짐 간격 (off-time, ms): {valueTime}ms
                     </Typography>
                     <Typography sx={{ mb: 1, fontSize: 13, fontFamily: "GmarketSansMedium" }} color="white">
-                      Limit: 15
+                      타이머 (timer, min): {valueLimit}min
                     </Typography>
                     <Button
                       style={{
@@ -410,7 +345,7 @@ function ExperimentMachineListPageStimulation(props) {
                         float: "right",
                         marginBottom: 15
                       }}
-                      onClick={handleup1}
+                      onClick={handleup}
                     >
                       자극 사용
                     </Button>
@@ -420,23 +355,8 @@ function ExperimentMachineListPageStimulation(props) {
               <Grid item lg={4} md={4} sm={4} xs={1}>
                 <Card sx={{ width: "90%", backgroundColor: "#393939" }}>
                   <CardContent>
-                    <Typography sx={{ fontSize: 20, fontFamily: "GmarketSansMedium" }} color="white" >
-                      2번
-                    </Typography>
-                    <Typography sx={{ mb: 1, fontSize: 13, fontFamily: "GmarketSansMedium" }} color="white">
-                      width: 250
-                    </Typography>
-                    <Typography sx={{ mb: 1, fontSize: 13, fontFamily: "GmarketSansMedium" }} color="white">
-                      duration: 50
-                    </Typography>
-                    <Typography sx={{ mb: 1, fontSize: 13, fontFamily: "GmarketSansMedium" }} color="white">
-                      amplitude: 200
-                    </Typography>
-                    <Typography sx={{ mb: 1, fontSize: 13, fontFamily: "GmarketSansMedium" }} color="white">
-                      Time: 100
-                    </Typography>
-                    <Typography sx={{ mb: 1, fontSize: 13, fontFamily: "GmarketSansMedium" }} color="white">
-                      Limit: 15
+                    <Typography sx={{ fontSize: 20, height: 168, fontFamily: "GmarketSansMedium" }} color="white" >
+                      수면유도 모드 - 약
                     </Typography>
                     <Button
                       style={{
@@ -457,23 +377,8 @@ function ExperimentMachineListPageStimulation(props) {
               <Grid item lg={4} md={4} sm={4} xs={1}>
                 <Card sx={{ width: "90%", backgroundColor: "#393939" }}>
                   <CardContent>
-                    <Typography sx={{ fontSize: 20, fontFamily: "GmarketSansMedium" }} color="white" >
-                      3번
-                    </Typography>
-                    <Typography sx={{ mb: 1, fontSize: 13, fontFamily: "GmarketSansMedium" }} color="white">
-                      width: 250
-                    </Typography>
-                    <Typography sx={{ mb: 1, fontSize: 13, fontFamily: "GmarketSansMedium" }} color="white">
-                      duration: 50
-                    </Typography>
-                    <Typography sx={{ mb: 1, fontSize: 13, fontFamily: "GmarketSansMedium" }} color="white">
-                      amplitude: 100
-                    </Typography>
-                    <Typography sx={{ mb: 1, fontSize: 13, fontFamily: "GmarketSansMedium" }} color="white">
-                      Time: 100
-                    </Typography>
-                    <Typography sx={{ mb: 1, fontSize: 13, fontFamily: "GmarketSansMedium" }} color="white">
-                      Limit: 15
+                    <Typography sx={{ fontSize: 20, height: 168, fontFamily: "GmarketSansMedium" }} color="white" >
+                      수면유도 모드 - 강
                     </Typography>
                     <Button
                       style={{
@@ -493,19 +398,6 @@ function ExperimentMachineListPageStimulation(props) {
               </Grid>
             </Grid>
           </Box>
-          <Button
-            style={{
-              color: "white",
-              borderRadius: 10,
-              backgroundColor: "#2877b9",
-              marginTop: 50,
-              float: "right",
-              fontFamily: "GmarketSansMedium",
-            }}
-            onClick={handleup}
-          >
-            자극 설정
-          </Button>
         </Box>
       </Box>
     </Paper>
