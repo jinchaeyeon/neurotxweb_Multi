@@ -210,12 +210,18 @@ const Api = {
     });
     return await patchJsonReqest(`/users/`, data, defaultValue);
   },
+  getAPI_logout: async (UserID, defaultValue) => {
+    const data = JSON.stringify({
+      id: UserID,
+      tokens: "NULL"
+    });
+    return await patchJsonReqest(`/users/`, data, defaultValue);
+  },
   getAPI_UserAdmin: async (UserID, button, defaultValue) => {
     const data = JSON.stringify({
       id: UserID,
       is_staff: button,
     });
-    console.log(data);
     return await patchJsonReqest(`/users/`, data, defaultValue);
   },
   getAPI_UserDelete: async (UserID, defaultValue) => {

@@ -88,7 +88,6 @@ export default function UserPageMiddle() {
         text,
         defaultValue
       );
-      console.log(infoBody);
       if (infoBody != null) {
         alert("수정되었습니다")
       }

@@ -60,7 +60,6 @@ function ExperimentMachineListPageMiddle(props) {
       if (!timestatus) {
         endtime = new Date();
         if (((endtime - starttime) / 1000) > 30) {
-          console.log("down2");
           settimeStatus(true);
           bluetoothService = machine;
           bluetoothService
@@ -79,7 +78,6 @@ function ExperimentMachineListPageMiddle(props) {
         endtime2 = new Date();
         if (((endtime2 - starttime2) / (1000 * 60)) > limits) {
           settimeStatus2(true);
-          console.log("down");
           bluetoothService = machine;
           bluetoothService
             .getCharacteristic(WRITE_UUID)

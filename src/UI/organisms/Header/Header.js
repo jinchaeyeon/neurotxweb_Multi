@@ -7,7 +7,18 @@ import cookie from '../../../API/cookie';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import PropTypes from 'prop-types';
 import Api from "../../../API/API";
+var defaultValue;
 
+let user_id = cookie.getCookie("userAccount")
+  ? cookie.getCookie("userAccount")
+  : "";
+var api_token = cookie.getCookie("accessToken");
+
+if (user_id) {
+  defaultValue = {
+    key: api_token,
+  };
+}
 const style = {
   position: "absolute",
   top: "50%",
@@ -43,6 +54,13 @@ const Header = ({ onMobileNavOpen }) => {
   };
 
   const Logout = async () => {
+    const getData = async () => {
+      const infoBody = await Api.getAPI_logout(
+        parseInt(cookie.getCookie("userID")),
+        defaultValue
+      );
+    };
+    getData();
     cookie.deleteCookie("userAccount");
     cookie.deleteCookie("userID");
     cookie.deleteCookie("accessToken");
