@@ -16,17 +16,44 @@ import Box from "@mui/material/Box";
 import cookie from "../../API/cookie";
 import WebGLPage from "../pages/WebGLPage/WebGLPage";
 import Hidden from '@mui/material/Hidden';
+import Api from "../../API/API";
 
+var defaultValue;
+
+let user_id = cookie.getCookie("userAccount")
+  ? cookie.getCookie("userAccount")
+  : "";
+var api_token = cookie.getCookie("accessToken");
+
+if (user_id) {
+  defaultValue = {
+    key: api_token,
+  };
+}
+var data;
 const App = () => {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
   var user_id = cookie.getCookie("userAccount");
   setInterval(() => {
-      if (cookie.getCookie("is_Login") == 2) {
-        alert("중복 로그인입니다. 다시 로그인 해주세요.");
-        cookie.setCookie("is_Login", 1, 1);
-        window.location.href = "/";
+    console.log(user_id);
+    if (user_id != "") {
+      const getData = async () => {
+        const infoBody = await Api.getAPI_user(
+          parseInt(cookie.getCookie("userID")),
+          defaultValue
+        );
+        if (infoBody.data.tokens == "NULL") {
+          alert("중복 로그인입니다. 다시 로그인 해주세요.");
+          cookie.deleteCookie("userAccount");
+          cookie.deleteCookie("userID");
+          cookie.deleteCookie("accessToken");
+          cookie.deleteCookie('is_staff');
+          window.location.href = "/";
+        }
       }
-  }, 2000);
+      getData();
+    };
+  }, 5000);
   return (
     <>
       <div className="App">

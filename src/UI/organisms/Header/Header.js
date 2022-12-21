@@ -65,7 +65,6 @@ const Header = ({ onMobileNavOpen }) => {
     cookie.deleteCookie("userID");
     cookie.deleteCookie("accessToken");
     cookie.deleteCookie('is_staff');
-    cookie.setCookie("is_Login", 0, 1);
     window.location.href = "/";
   }
 

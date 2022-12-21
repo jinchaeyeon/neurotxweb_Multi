@@ -183,6 +183,9 @@ const Api = {
     });
     return await postJsonReqest(`/Manager/UpdatePassword`, data, defaultValue);
   },
+  getAPI_user: async (user_id) => {
+    return await getFormRequest(`/users/${user_id}`, defaultValue);
+  },
   //유저
   getAPI_UserList: async (
     search,

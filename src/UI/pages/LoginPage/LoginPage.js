@@ -27,10 +27,7 @@ function LoginPage() {
               cookie.deleteCookie("userAccount");
               cookie.deleteCookie("userID");
               cookie.deleteCookie("accessToken");
-              cookie.deleteCookie('is_staff');
-              cookie.setCookie("is_Login", 2, 1);
             } else {
-              cookie.setCookie("is_Login", 1, 1);
               cookie.setCookie("userAccount", ID, 1);
               cookie.setCookie("userID", infoBody2.data.id, 1);
               cookie.setCookie("accessToken", infoBody.data.access_token, 1);
