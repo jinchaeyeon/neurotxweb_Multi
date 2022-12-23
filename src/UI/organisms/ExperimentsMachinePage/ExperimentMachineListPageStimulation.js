@@ -62,7 +62,7 @@ function ExperimentMachineListPageStimulation(props) {
   React.useEffect(() => {
   }, [valueAmplitude, valueWidth, valueDuration, valueTime, valueLimit]);
 
- function AddStimulus(Amplitude, width, duration, Time, limit) {
+  function AddStimulus(Amplitude, width, duration, Time, limit) {
     var sti_intensity = width;
     sti_intensity = parseInt(sti_intensity);
     var sti_interval = duration;
@@ -106,7 +106,7 @@ function ExperimentMachineListPageStimulation(props) {
       });
     alert("자극 전달 완료");
     props.propFunction2(true);
-    props.propFunction3(new Date(), limit);
+    props.propFunction3(new Date(), valueLimit);
   }
 
   function widthAmplitude() {
@@ -181,13 +181,13 @@ function ExperimentMachineListPageStimulation(props) {
               </Grid>
               <Grid item xs>
                 <Slider
-                    value={typeof valueAmplitude === "number" ? valueAmplitude : 0}
-                    onChange={handleAmplitudeSliderChange}
-                    aria-labelledby="input-slider"
-                    min={0}
-                    max={3700}
-                    step={409.5}
-                  />
+                  value={typeof valueAmplitude === "number" ? valueAmplitude : 0}
+                  onChange={handleAmplitudeSliderChange}
+                  aria-labelledby="input-slider"
+                  min={0}
+                  max={3700}
+                  step={409.5}
+                />
               </Grid>
               <Grid item>
                 <h3>{widthAmplitude()}</h3>
@@ -210,13 +210,13 @@ function ExperimentMachineListPageStimulation(props) {
               </Grid>
               <Grid item xs>
                 <Slider
-                    value={typeof valueWidth === "number" ? valueWidth : 0}
-                    onChange={handleWidthSliderChange}
-                    aria-labelledby="input-slider"
-                    min={0}
-                    max={300}
-                    step={50}
-                  />
+                  value={typeof valueWidth === "number" ? valueWidth : 0}
+                  onChange={handleWidthSliderChange}
+                  aria-labelledby="input-slider"
+                  min={0}
+                  max={300}
+                  step={50}
+                />
               </Grid>
               <Grid item>
                 <h3>{valueWidth}µs</h3>
@@ -239,13 +239,13 @@ function ExperimentMachineListPageStimulation(props) {
               </Grid>
               <Grid item xs>
                 <Slider
-                    value={typeof valueDuration === "number" ? valueDuration : 0}
-                    onChange={handleDurationSliderChange}
-                    aria-labelledby="input-slider"
-                    min={20}
-                    max={200}
-                    step={20}
-                  />
+                  value={typeof valueDuration === "number" ? valueDuration : 0}
+                  onChange={handleDurationSliderChange}
+                  aria-labelledby="input-slider"
+                  min={20}
+                  max={200}
+                  step={20}
+                />
               </Grid>
               <Grid item>
                 <h3>{valueDuration}ms</h3>
@@ -268,13 +268,13 @@ function ExperimentMachineListPageStimulation(props) {
               </Grid>
               <Grid item xs>
                 <Slider
-                    value={typeof valueTime === "number" ? valueTime : 0}
-                    onChange={handleTimeSliderChange}
-                    aria-labelledby="input-slider"
-                    min={0}
-                    max={2500}
-                    step={500}
-                  />
+                  value={typeof valueTime === "number" ? valueTime : 0}
+                  onChange={handleTimeSliderChange}
+                  aria-labelledby="input-slider"
+                  min={0}
+                  max={2500}
+                  step={500}
+                />
               </Grid>
               <Grid item>
                 <h3>{widthTime()}</h3>
@@ -296,14 +296,14 @@ function ExperimentMachineListPageStimulation(props) {
                 <VolumeUp />
               </Grid>
               <Grid item xs>
- <Slider
-                    value={typeof valueLimit === "number" ? valueLimit : 0}
-                    onChange={handleLimitSliderChange}
-                    aria-labelledby="input-slider"
-                    min={15}
-                    max={60}
-                    step={15}
-                  />
+                <Slider
+                  value={typeof valueLimit === "number" ? valueLimit : 0}
+                  onChange={handleLimitSliderChange}
+                  aria-labelledby="input-slider"
+                  min={15}
+                  max={60}
+                  step={15}
+                />
               </Grid>
               <Grid item>
                 <h3>{valueLimit}min</h3>
