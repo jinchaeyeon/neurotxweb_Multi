@@ -8,6 +8,7 @@ import cookie from "../../../API/cookie";
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 
+//user_id cookie
 var defaultValue;
 
 let user_id = cookie.getCookie("userAccount")
@@ -21,11 +22,13 @@ if (user_id) {
   };
 }
 
+//관리자 여부
 const is_staff = cookie.getCookie('is_staff') ? cookie.getCookie('is_staff') : "false";
 
 const Sidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
   const publicUrl = process.env.PUBLIC_URL;
+  //사이드바 state
   useEffect(() => {
     if (openMobile && onMobileClose) {
       onMobileClose();
@@ -52,6 +55,7 @@ const Sidebar = ({ onMobileClose, openMobile }) => {
       <Box>
         <Box>
           {SidebarData.map((item, index) => {
+            //관리자일 경우 전체 보여주기, 아닐경우 리스트랑 webgl만 보여주기
             if (is_staff == "true") {
               return <SubMenu item={item} key={index} />;
             }

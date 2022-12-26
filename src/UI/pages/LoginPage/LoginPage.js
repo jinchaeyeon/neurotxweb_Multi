@@ -17,11 +17,11 @@ function LoginPage() {
   };
   const handlesubmit = async () => {
     const getData = async () => {
-      const infoBody = await Api.getAPI_AccountLogin_Syns(ID, PW);
+      const infoBody = await Api.getAPI_AccountLogin_Syns(ID, PW); //로그인
       if (infoBody != null) {
-        const infoBody2 = await Api.getUserData(infoBody.data.access_token);
+        const infoBody2 = await Api.getUserData(infoBody.data.access_token); //유저정보 조회
         if (infoBody2.status == 200) {
-            if (infoBody.data.token_type == "bearer") {
+            if (infoBody.data.token_type == "bearer") { //중복로그인 답변
               alert("중복로그인 입니다. 다시 로그인해주세요.")
               cookie.deleteCookie("is_Login");
               cookie.deleteCookie("userAccount");

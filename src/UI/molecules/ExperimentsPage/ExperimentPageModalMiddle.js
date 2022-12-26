@@ -19,6 +19,7 @@ export default function ExperimentPageModalMiddle(props) {
     setContent(event.target.value);
   };
 
+  //필수항목 체크
   const handleup = () => {
     if(name == '' || name == null || name == undefined){
       alert('실험 프로토콜 명은 필수 항목입니다.')

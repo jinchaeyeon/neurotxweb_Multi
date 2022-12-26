@@ -1,3 +1,4 @@
+//차트 라이브러리 수정 x
 export default function getRealTimeChart(notuseTrans) {
   const d3 = document.createElement("script");
   d3.src = "https://d3js.org/d3.v4.min.js";

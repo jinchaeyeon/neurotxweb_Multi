@@ -19,6 +19,7 @@ export default function PlotEEG1(props) {
   const previousTimeRef = useRef();
 
   function getData(min) {
+    //데이터가 1개씩 들어올때마다 배열에 저장
     if (props.state == true || props.state == undefined) {
       if (xs.length == LENGTH) {
         xs.shift();
@@ -33,7 +34,7 @@ export default function PlotEEG1(props) {
     return num;
   }
 
-  function getLength() {
+  function getLength() { //보여줄 데이터 크기 지정
     if (limit[1] == 0) {
       if (limit[0] == 30) {
         LENGTH = 1800;
@@ -52,6 +53,7 @@ export default function PlotEEG1(props) {
     let animate = (time) => {
       if (previousTimeRef.current !== undefined) {
         if (!plot) return;
+        //데이터가 다찼을경우 shift
         setShift((prevShift) => prevShift + 1);
         setData((prev) => getData(shift));
         plot.setData(data);

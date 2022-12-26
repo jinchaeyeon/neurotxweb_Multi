@@ -23,6 +23,7 @@ function ExperimentMachineListPageStimulation(props) {
   const [valueTime, setValueTime] = React.useState(0);
   const [valueLimit, setValueLimit] = React.useState(15);
 
+  //각 설정 값 slider
   const handleWidthSliderChange = (event, newValue) => {
     setValueWidth(newValue);
   };
@@ -35,6 +36,7 @@ function ExperimentMachineListPageStimulation(props) {
     setValueAmplitude(newValue);
   };
 
+  //0일 경우 duration이랑 같은 time으로 지정
   const handleTimeSliderChange = (event, newValue) => {
     if (newValue == 0) {
       newValue = valueDuration;
@@ -47,21 +49,23 @@ function ExperimentMachineListPageStimulation(props) {
     setValueLimit(newValue);
   };
 
+  //각 자극 리스트 클릭 시 자극 설정
   const handleup = () => {
     AddStimulus(valueAmplitude, valueWidth, valueDuration, valueTime, valueLimit);
   };
 
   const handleup2 = () => {
-    AddStimulus(2047.5, 50, 200, 200, 15);
+    AddStimulus(500, 100, 50, 50, 30);
   };
 
   const handleup3 = () => {
-    AddStimulus(4095, 50, 200, 200, 15);
+    AddStimulus(1000, 100, 50, 50, 30);
   };
 
   React.useEffect(() => {
   }, [valueAmplitude, valueWidth, valueDuration, valueTime, valueLimit]);
 
+  //자극 전송
   function AddStimulus(Amplitude, width, duration, Time, limit) {
     var sti_intensity = width;
     sti_intensity = parseInt(sti_intensity);
@@ -77,7 +81,7 @@ function ExperimentMachineListPageStimulation(props) {
       .getCharacteristic(WRITE_UUID)
       .then(function (characteristic) {
         var deviceChar = characteristic;
-        const cmd_intense2 = "910|2";
+        const cmd_intense2 = "910|2"; //전송시 자극모드 변환
         var uint8array_intense2 = new TextEncoder().encode(cmd_intense2);
         deviceChar
           .writeValueWithoutResponse(uint8array_intense2)
@@ -106,10 +110,11 @@ function ExperimentMachineListPageStimulation(props) {
       });
     alert("자극 전달 완료");
     props.propFunction2(true);
-    props.propFunction3(new Date(), valueLimit);
+    props.propFunction3(new Date(), valueLimit); //타이머 설정을 위해 props 전달
   }
 
-  function widthAmplitude() {
+  //각 설정값 표시 법
+  function widthAmplitude() { 
     if (valueAmplitude == 0) {
       return "0mA";
     } else if (valueAmplitude == 409.5) {

@@ -18,6 +18,7 @@ import Api from "../../../API/API";
 import cookie from "../../../API/cookie";
 import Hidden from '@mui/material/Hidden';
 
+//user_id cookie
 var defaultValue;
 
 let user_id = cookie.getCookie("userAccount")
@@ -31,6 +32,7 @@ if (user_id) {
   };
 }
 
+//module 스타일
 const style = {
   position: "absolute",
   top: "50%",
@@ -44,6 +46,7 @@ const style = {
   p: 4,
 };
 
+//테이블 열
 const columns = [
   { id: "UserID", label: "UserID", minWidth: 150 },
   { id: "Email", label: "Email", minWidth: 200 },
@@ -64,6 +67,7 @@ const columns = [
   },
 ];
 
+//테이블 데이터 생성
 function createData(UserID, Email, LastLogin, RegistrationDate, button, id) {
   return { UserID, Email, LastLogin, RegistrationDate, button, id };
 }
@@ -76,11 +80,14 @@ export default function UserPageMiddle() {
   const [state, setState] = React.useState([]);
   const [rows, setRows] = React.useState([]);
 
+  //모듈 open
   const handleOpenTrue = (row) => {
     setOpenTrue(true);
     setState(row);
   };
+  //모듈 close
   const handleCloseTrue = () => setOpenTrue(false);
+  //이메일 정보 수정
   const handleEmail = (data, text) => {
     const getData = async () => {
       const infoBody = await Api.getAPI_UserModify(
@@ -107,6 +114,7 @@ export default function UserPageMiddle() {
     setPage(newPage);
   };
 
+  //유저 관리자 정보 수정
   const handleAccount = (row) => {
     const getData = async () => {
       const infoBody = await Api.getAPI_UserAdmin(
@@ -121,6 +129,7 @@ export default function UserPageMiddle() {
     getData();
   };
 
+  //유저 삭제
   const handleDeleteAccount = (row) => {
     const getData = async () => {
       const infoBody = await Api.getAPI_UserDelete(
@@ -332,6 +341,7 @@ export default function UserPageMiddle() {
   }
 
   React.useEffect(() => {
+    //주기적으로 유저 리스트 조회
     const getData = async () => {
       let d = [];
       const infoBody = await Api.getAPI_UserList(

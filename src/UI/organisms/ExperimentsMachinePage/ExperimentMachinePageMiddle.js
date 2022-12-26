@@ -8,12 +8,14 @@ var ir1 = 0;
 var red1 = 0;
 var t1 = 0;
 var ac = 0;
+//spo2계산 데이터 형식
 var ppg = {
   time: [], //column "time(second)"
   RED:   [], //column "RED"
   IR:  [] //column "IR"
 };
 export default function ExperimentMachinePageMiddle(props) {
+  //연결시 상위 components로 전송
   function handleprops(
     t,
     B3_5_EEG1,
@@ -54,6 +56,7 @@ export default function ExperimentMachinePageMiddle(props) {
     optionalServices: ["generic_access"],
   };
 
+  //spo2 계산식
   function getSpo2(ppg) {
     var maxIR = detectPeak(ppg.time, ppg.IR);
     var maxRED = detectPeak(ppg.time, ppg.RED);
@@ -150,6 +153,7 @@ export default function ExperimentMachinePageMiddle(props) {
     };
   }
 
+  //기기 연결
   function connectDevice() {
     let starttime = new Date();
     navigator.bluetooth.requestDevice(options).then(function (device) {
@@ -164,7 +168,7 @@ export default function ExperimentMachinePageMiddle(props) {
               .getCharacteristic(WRITE_UUID)
               .then(function (characteristic) {
                 var deviceChar = characteristic;
-                const cmd = "910|1";
+                const cmd = "910|1"; //연결시 자극 x, 데이터만 o
                 var uint8array = new TextEncoder().encode(cmd);
                 deviceChar.writeValueWithoutResponse(uint8array);
               });
@@ -184,6 +188,7 @@ export default function ExperimentMachinePageMiddle(props) {
 
                       var ct = g_recv_idx + 1;
 
+                      //데이터 수집(int형)
                       if (pt) {
                         var DATA = [];
                         DATA[0] = event.target.value.buffer.slice(0, 33 - 1);

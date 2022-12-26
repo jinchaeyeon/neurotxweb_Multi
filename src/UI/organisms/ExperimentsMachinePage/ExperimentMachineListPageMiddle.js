@@ -23,6 +23,7 @@ var willBeUploadedDataArr = [];
 var bluetoothService = null;
 const WRITE_UUID = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
 
+//user_id cookie
 var defaultValue;
 
 let user_id = cookie.getCookie("userAccount")
@@ -53,20 +54,21 @@ function ExperimentMachineListPageMiddle(props) {
   let endtime2;
 
   setInterval(() => {
+    //30초 마다 타이머 체크
     setTimer(Timer + 30);
   }, 30000);
   React.useEffect(() => {
     if (starttime2 == undefined) {
       if (!timestatus) {
         endtime = new Date();
-        if (((endtime - starttime) / 1000) > 30) {
+        if (((endtime - starttime) / 1000) > 30) { //자극 설정안하고 30초 후 자동 기기 종료
           settimeStatus(true);
           bluetoothService = machine;
           bluetoothService
             .getCharacteristic(WRITE_UUID)
             .then(function (characteristic) {
               var deviceChar = characteristic;
-              const cmd_intense = "100|0";
+              const cmd_intense = "100|0"; //전원 off
               var uint8array_intense = new TextEncoder().encode(cmd_intense);
               deviceChar
                 .writeValueWithoutResponse(uint8array_intense);
@@ -76,19 +78,19 @@ function ExperimentMachineListPageMiddle(props) {
     } else {
       if (!timestatus2) {
         endtime2 = new Date();
-        if (((endtime2 - starttime2) / (1000 * 60)) > limits) {
+        if (((endtime2 - starttime2) / (1000 * 60)) > limits) { //자극타이머 시간이 지나면 종료
           settimeStatus2(true);
           bluetoothService = machine;
           bluetoothService
             .getCharacteristic(WRITE_UUID)
             .then(function (characteristic) {
               var deviceChar = characteristic;
-              const cmd_intense = "910|1";
+              const cmd_intense = "910|1"; //윗판 종료(삭제해도 작동함)
               var uint8array_intense = new TextEncoder().encode(cmd_intense);
               deviceChar
                 .writeValueWithoutResponse(uint8array_intense)
                 .then(function () {
-                  const cmd_interval = "100|0";
+                  const cmd_interval = "100|0"; //전체 종료
                   var uint8array_interval = new TextEncoder().encode(cmd_interval);
                   deviceChar
                     .writeValueWithoutResponse(uint8array_interval);
@@ -98,6 +100,8 @@ function ExperimentMachineListPageMiddle(props) {
       }
     }
   },[Timer, starttime2])
+
+  //차트 옵션
   const opts = {
     width: widths,
     height: 200,
@@ -124,6 +128,7 @@ function ExperimentMachineListPageMiddle(props) {
     ],
   };
 
+  //차트 초기화
   function init() {
     for (var i = 0; i < 6; i++) {
       chart[i] = getRealTimeChart();
@@ -135,6 +140,7 @@ function ExperimentMachineListPageMiddle(props) {
     init();
   }
 
+  //데이터 저장
   function uploadData() {
     const signal_names2 = [
       "B3_5_EEG1",
@@ -145,7 +151,7 @@ function ExperimentMachineListPageMiddle(props) {
       "B29_30_Y",
       "B31_32_Z",
     ];
-    if (state != "Pause") {
+    if (state != "Pause") { //중지시 저장 x
       for (var i = 0; i < 6; i++) {
         willBeUploadedDataArr.push({
           proto_exp_id: id,
@@ -167,7 +173,7 @@ function ExperimentMachineListPageMiddle(props) {
     }
   }
 
-  function list(i) {
+  function list(i) { //각 차트 형태
     if (datas == undefined) {
       return 0;
     } else if (i == 0) {
@@ -275,7 +281,8 @@ function ExperimentMachineListPageMiddle(props) {
             }}
             onChange={handleChanges}
           >
-            <option style={{ fontFamily: "GmarketSansMedium" }} value={[10, i]}>
+            //시간마다 보여주는 값 변경
+            <option style={{ fontFamily: "GmarketSansMedium" }} value={[10, i]}> 
               10sec
             </option>
             <option style={{ fontFamily: "GmarketSansMedium" }} value={[30, i]}>

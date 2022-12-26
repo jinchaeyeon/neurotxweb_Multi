@@ -16,6 +16,7 @@ export default function PlotZ(props) {
   const previousTimeRef = useRef();
 
   function getData(min) {
+    //데이터가 1개씩 들어올때마다 배열에 저장
     if (props.state == true|| props.state == undefined) {
       if (xs.length == LENGTH) {
         xs.shift();
@@ -27,7 +28,7 @@ export default function PlotZ(props) {
     return [xs, ys];
   }
 
-  function getLength() {
+  function getLength() {//보여줄 데이터 크기 지정
     if (limit[1] == 5) {
       if (limit[0] == 30) {
         LENGTH = 1800;
@@ -45,6 +46,7 @@ export default function PlotZ(props) {
   useEffect(() => {
     getLength();
     let animate = (time) => {
+      //데이터가 다찼을경우 shift
       if (previousTimeRef.current !== undefined) {
         if (!plot) return;
         setShift((prevShift) => prevShift + 1);

@@ -15,6 +15,7 @@ import Api from "../../../API/API";
 import cookie from "../../../API/cookie";
 import Hidden from '@mui/material/Hidden';
 
+//user_id cookie
 var defaultValue;
 
 let user_id = cookie.getCookie("userAccount")
@@ -28,6 +29,7 @@ if (user_id) {
   };
 }
 
+//테이블 헤더
 const columns = [
   { id: "Serial", label: "Serial", minWidth: 50 },
   { id: "licensekey", label: "license key", minWidth: 250 },
@@ -48,6 +50,7 @@ const columns = [
   },
 ];
 
+//데이터 생성
 function createData(Serial, licensekey, usedby, usedfrom, button) {
   return { Serial, licensekey, usedby, usedfrom, button };
 }
@@ -57,10 +60,12 @@ export default function LicensePageMiddle() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rows, setRows] = React.useState([]);
 
+  //페이지네이션
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
+  //라이센스 삭제
   const handleDeleteAccount = (row) => {
     const getData = async () => {
       const infoBody = await Api.getAPI_LicenseDelete(
@@ -74,6 +79,7 @@ export default function LicensePageMiddle() {
     getData();
   };
 
+  //라이센스 키 추가
   const AddLicense = () => {
     const getData = async () => {
       const infoBody = await Api.getAPI_ADDLicenseKey(defaultValue);
@@ -84,6 +90,7 @@ export default function LicensePageMiddle() {
     getData();
   };
 
+  //각 셀 
   function cell(value, row) {
     if (value == undefined) {
       return (
@@ -123,6 +130,7 @@ export default function LicensePageMiddle() {
   }
 
   React.useEffect(() => {
+    //주기적으로 데이터 불러오기
     const getData = async () => {
       let d = [];
       const infoBody = await Api.getAPI_LicenseList(

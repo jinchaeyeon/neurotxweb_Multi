@@ -23,6 +23,7 @@ import Api from "../../../API/API";
 import cookie from "../../../API/cookie";
 import Hidden from '@mui/material/Hidden';
 
+//user_id cookie
 var defaultValue;
 
 let user_id = cookie.getCookie("userAccount")
@@ -36,6 +37,7 @@ if (user_id) {
   };
 }
 
+//모듈 css
 const style = {
   position: "absolute",
   top: "50%",
@@ -49,6 +51,7 @@ const style = {
   p: 4,
 };
 
+//테이블 헤더
 const columns = [
   { id: "id", label: "id", minWidth: 50 },
   { id: "name", label: "Name", minWidth: 50 },
@@ -105,6 +108,7 @@ export default function ExperimentSubPageMiddle(props) {
   const [state, setState] = React.useState([]);
   const [listLength, setlistLength] = React.useState(false);
 
+  //데이터 생성
   function createData(
     id,
     name,
@@ -124,7 +128,7 @@ export default function ExperimentSubPageMiddle(props) {
       parseInt(ages.slice(4, 6)),
       parseInt(ages.slice(6, 8))
     );
-    let age = today.getFullYear() - birthDate.getFullYear() + 1;
+    let age = today.getFullYear() - birthDate.getFullYear() + 1; //생년월일 나이로 변환
 
     return {
       id,
@@ -148,6 +152,7 @@ export default function ExperimentSubPageMiddle(props) {
   };
   const handleClose = () => setOpen(false);
 
+  //실험 100개 이상시 안보이도록 제한
   const handleOpenProtocol = (row) => {
     if (listLength == true) {
       alert("프로토콜 리스트의 개수가 초과되었습니다. 새로운 프로토콜을 생성해주세요.")
@@ -159,6 +164,7 @@ export default function ExperimentSubPageMiddle(props) {
   };
   const handleProtocolClose = () => setOpenProtocol(false);
 
+  //실험 정보 수정
   const handleProtocol = (
     id,
     name,
@@ -188,10 +194,12 @@ export default function ExperimentSubPageMiddle(props) {
     handleClose();
   };
 
+  //페이지네이션
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
+  //실험 데이터 생성
   const handleAddProtocol = (
     name,
     sex,
@@ -202,7 +210,7 @@ export default function ExperimentSubPageMiddle(props) {
     defaultValue
   ) => {
     const getData = async () => {
-      if (window.outerWidth < 1100) {
+      if (window.outerWidth < 1100) { //모바일은 기기연동이 안되서 화면자체에서 막음
         alert("모바일은 실험 불가합니다.");
         window.location.href = `/`;
       } else {
@@ -227,6 +235,7 @@ export default function ExperimentSubPageMiddle(props) {
     handleProtocolClose();
   };
 
+  //실험데이터 삭제
   const handleDeleteAccount = (row) => {
     const getData = async () => {
       const infoBody = await Api.getAPI_ExperimentSubDelete(
@@ -240,6 +249,7 @@ export default function ExperimentSubPageMiddle(props) {
     getData();
   };
 
+  //각 셀
   function cell(value, row) {
     if (value == "button") {
       return (
@@ -387,6 +397,7 @@ export default function ExperimentSubPageMiddle(props) {
   }
 
   React.useEffect(() => {
+    //실험 데이터 조회
     const getData = async () => {
       let d = [];
       const infoBody = await Api.getAPI_ExperimentSubList(
@@ -398,7 +409,7 @@ export default function ExperimentSubPageMiddle(props) {
       }
       infoBody.data.map((item) => {
         var link_txt = "";
-        if (item.survey_link != "") {
+        if (item.survey_link != "") { //링크 첨부
           link_txt =
             '<a href="' + item.survey_link + '" target="_blank">link</a>';
         }
@@ -406,7 +417,7 @@ export default function ExperimentSubPageMiddle(props) {
           link_txt = "null"
         }
         var agree_txt = "";
-        if (item.agree_filename != "") {
+        if (item.agree_filename != "") { //파일 다운
           var api_base_url = "http://neurotx.co.kr:8888";
           agree_txt =
             '<a href="' + api_base_url + '/files/' + item.agree_filename + '" target="_blank">' + item.agree_filename + '</a>';

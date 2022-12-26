@@ -6,6 +6,7 @@ import ExperimentSubPageMiddle from '../../organisms/ExperimentsSubPage/Experime
 import Api from "../../../API/API";
 import cookie from "../../../API/cookie";
 
+//user_id cookie
 var defaultValue;
 
 let user_id = cookie.getCookie("userAccount")
@@ -23,7 +24,7 @@ function ExperimentsSubPage() {
   const id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
   const [name, setName] = React.useState("");
 
-  const getData = async () => {
+  const getData = async () => { //실험 리스트 조회
     let d = "";
     const infoBody = await Api.getAPI_ExperimentList("",defaultValue);
     infoBody.data.map((item) => {

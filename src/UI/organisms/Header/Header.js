@@ -7,6 +7,7 @@ import cookie from '../../../API/cookie';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import PropTypes from 'prop-types';
 import Api from "../../../API/API";
+//user_id cookie
 var defaultValue;
 
 let user_id = cookie.getCookie("userAccount")
@@ -19,6 +20,7 @@ if (user_id) {
     key: api_token,
   };
 }
+//모듈 css
 const style = {
   position: "absolute",
   top: "50%",
@@ -53,6 +55,7 @@ const Header = ({ onMobileNavOpen }) => {
     setAnchorEl(null);
   };
 
+  //로그아웃
   const Logout = async () => {
     const getData = async () => {
       const infoBody = await Api.getAPI_logout(

@@ -4,6 +4,7 @@ import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import PinOutlinedIcon from '@mui/icons-material/PinOutlined';
 import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
+//사이드바 데이터 및 경로
 export const SidebarData = [
   {
     title: 'Experiments',

@@ -1,7 +1,7 @@
 import React from "react";
 import { Hidden, Box } from "@mui/material";
 import getRealTimeChart from "../ExperimentsMachinePage/realtime_chart";
-
+//기존 인수받았던 html코드부분에서 기능 가져옴. react버전으로 수정해야함.
 const d3 = document.createElement("script");
 
 d3.src = "https://d3js.org/d3.v4.min.js";

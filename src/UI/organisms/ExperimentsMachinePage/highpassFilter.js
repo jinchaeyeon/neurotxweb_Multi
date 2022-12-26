@@ -7,6 +7,9 @@ import {
   ORDER as defaultOrder,
   CHARACTERISTIC as defaultCharacteristic,
 } from "./constants";
+
+//highpassFilter.js 변경 x
+
 const createHighpassIIR = options => {
   const calc = new CalcCascades();
   const coeffs = calc.highpass(options);

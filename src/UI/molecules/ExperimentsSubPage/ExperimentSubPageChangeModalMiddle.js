@@ -11,6 +11,7 @@ import Api from "../../../API/API";
 import cookie from "../../../API/cookie";
 import Hidden from '@mui/material/Hidden';
 
+//user_id cookie
 var defaultValue;
 
 let user_id = cookie.getCookie("userAccount")
@@ -85,6 +86,7 @@ export default function ExperimentSubPageChangeModalMiddle(props) {
     setFile(Files);
   };
 
+  //필수 항목 및 형식 체크
   const handleup = () => {
     if (name == "" || name == null || name == undefined) {
       alert("이름은 필수 항목입니다.");

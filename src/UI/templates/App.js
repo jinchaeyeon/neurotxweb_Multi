@@ -17,7 +17,7 @@ import cookie from "../../API/cookie";
 import WebGLPage from "../pages/WebGLPage/WebGLPage";
 import Hidden from '@mui/material/Hidden';
 import Api from "../../API/API";
-
+//user_id cookie
 var defaultValue;
 
 let user_id = cookie.getCookie("userAccount")
@@ -34,15 +34,15 @@ var data;
 const App = () => {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
   var user_id = cookie.getCookie("userAccount");
-  setInterval(() => {
+  setInterval(() => { //중복 로그인 수시 체크
     console.log(user_id);
-    if (user_id != "") {
+    if (user_id != "") { // 유저 정보 없을 시 로그인 필요
       const getData = async () => {
-        const infoBody = await Api.getAPI_user(
+        const infoBody = await Api.getAPI_user( //유저 정보 조회
           parseInt(cookie.getCookie("userID")),
           defaultValue
         );
-        if (infoBody.data.tokens == "NULL") {
+        if (infoBody.data.tokens == "NULL") { //토큰이 없을 시 중복로그인 설정
           alert("중복 로그인입니다. 다시 로그인 해주세요.");
           cookie.deleteCookie("userAccount");
           cookie.deleteCookie("userID");
@@ -53,7 +53,7 @@ const App = () => {
       }
       getData();
     };
-  }, 5000);
+  }, 5000); //5초마다 측정
   return (
     <>
       <div className="App">
@@ -62,7 +62,7 @@ const App = () => {
             <Route
               path="/"
               element={
-                user_id == "" ? (
+                user_id == "" ? ( //유저정보로 로그인 페이지와 실험 페이지 구분
                   <Box style={{ display: "flex", width: "100%" }}>
                     <Box style={{ width: "100%" }}>
                       <LoginPage />

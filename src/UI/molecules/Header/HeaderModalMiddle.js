@@ -2,7 +2,8 @@ import * as React from "react";
 import { Box, TextField, Button, Hidden } from "@mui/material";
 import Api from "../../../API/API";
 import cookie from "../../../API/cookie";
-
+//변경 백엔드 수정필요
+//user_id cookie
 var defaultValue;
 
 let user_id = cookie.getCookie('userAccount') ? cookie.getCookie('userAccount') : '';
@@ -25,12 +26,10 @@ export default function HeaderModalMiddle(props) {
     setCheck(event.target.value);
   };
 
-  const handleup = async() => {
+  const handleup = async() => { //비밀번호 동일한지 체크 
     if (pw === check) {
       const user= cookie.getCookie('userAccount') ?cookie.getCookie('userAccount') : null;
       const infoBody = await Api.getAPI_ChangePassword(pw, user,defaultValue);
-      // alert("변경되었습니다.")
-      // props.propFunction(false);
     }
     else {
       alert("비밀번호가 동일하지 않습니다.")

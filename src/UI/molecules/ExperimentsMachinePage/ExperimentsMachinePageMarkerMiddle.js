@@ -4,6 +4,7 @@ import { Box, Button, TextField,Grid, Card,CardContent } from "@mui/material";
 import Api from '../../../API/API';
 import cookie from '../../../API/cookie';
 
+//user_id cookie
 var defaultValue;
 
 let user_id = cookie.getCookie("userAccount")
@@ -24,8 +25,8 @@ export default function ExperimentPageMarkerMiddle(props) {
   const regtime = props.regtime;
   const [list, setList] = React.useState([]);
   const [text, setText] = React.useState("");
+  //마커 수정 및 추가
   const handleup = () => {
-
     list.map((items) => {
         if(items.regtime == time) {
             const obj = {
@@ -66,6 +67,7 @@ export default function ExperimentPageMarkerMiddle(props) {
     return (n < 10 ? '0' : '') + n; 
   }
 
+  //시간 표기 변경
   function timetotxt(regtime) {
     var tdate=new Date();
     tdate.setTime(regtime);
@@ -78,6 +80,7 @@ export default function ExperimentPageMarkerMiddle(props) {
   }
 
   const handledelete = (id) => {
+    //마커 삭제
     const getData = async () => {
         const infoData = await Api.getAPI_deleteMarker(id,defaultValue);
       };

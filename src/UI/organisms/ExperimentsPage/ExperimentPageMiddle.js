@@ -23,6 +23,7 @@ import Api from "../../../API/API";
 import cookie from "../../../API/cookie";
 import Hidden from '@mui/material/Hidden';
 
+//user_id cookie
 var defaultValue;
 
 let user_id = cookie.getCookie("userAccount")
@@ -36,6 +37,7 @@ if (user_id) {
   };
 }
 
+//모듈 css
 const style = {
   position: "absolute",
   top: "50%",
@@ -49,6 +51,7 @@ const style = {
   p: 4,
 };
 
+//테이블 헤더
 const columns = [
   { id: "id", label: "번호", minWidth: 100 },
   { id: "name", label: "실험 프로토콜 명", minWidth: 200 },
@@ -68,7 +71,7 @@ const columns = [
     minWidth: 250,
   },
 ];
-
+//데이터 생성
 function createData(id, name, content, manager, button) {
   return { id, name, content, manager, button };
 }
@@ -82,10 +85,12 @@ export default function ExperimentPageMiddle() {
   const [state, setState] = React.useState([]);
   const [Search, setSearch] = React.useState('');
 
+  //검색
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
   };
 
+  //검색어에 맞는 프로토콜 리스트 변환
   const handleSearchChange2 = (event) => {
     const getData = async () => {
       let d = [];
@@ -127,6 +132,7 @@ export default function ExperimentPageMiddle() {
   };
   const handleProtocolClose = () => setOpenProtocol(false);
 
+  //프로토콜 정보 수정
   const handleProtocol = (id, name, manager, content) => {
     const getData = async () => {
       const infoBody = Api.getAPI_ExperimentModify(id, name, manager, content, defaultValue);
@@ -138,10 +144,12 @@ export default function ExperimentPageMiddle() {
     handleClose();
   };
 
+  //페이지네이션
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
+  //프로토콜 등록
   const handleAddProtocol = (name, manager, content) => {
     const getData = async () => {
       const infoBody = Api.getAPI_ExperimentCreate(name, manager, content, defaultValue);
@@ -153,6 +161,7 @@ export default function ExperimentPageMiddle() {
     handleProtocolClose();
   };
 
+  //프로토콜 삭제
   const handleDeleteAccount = (row) => {
     const getData = async () => {
       const infoBody = Api.getAPI_ExperimentDelete(row.id, defaultValue);
@@ -286,6 +295,7 @@ export default function ExperimentPageMiddle() {
   }
 
   React.useEffect(() => {
+    //프로토콜 데이터 조회(검색어를 저장하여 검색어 입력시에 계속 그 리스트가 보여지도록 설정state)
     const getData = async () => {
       let d = [];
       const infoBody = await Api.getAPI_ExperimentList(Search,

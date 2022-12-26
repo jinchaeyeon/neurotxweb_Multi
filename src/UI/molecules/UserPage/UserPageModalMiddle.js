@@ -9,7 +9,7 @@ export default function UserPageModalMiddle(props) {
     setText(event.target.value);
   };
 
-  const handleup = () => {
+  const handleup = () => { //형식 및 필수 필드 체크
     if (text != "") {
       var reg_email =
         /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
