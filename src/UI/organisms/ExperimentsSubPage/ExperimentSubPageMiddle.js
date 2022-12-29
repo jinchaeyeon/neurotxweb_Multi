@@ -22,7 +22,7 @@ import { Link } from "react-router-dom";
 import Api from "../../../API/API";
 import cookie from "../../../API/cookie";
 import Hidden from '@mui/material/Hidden';
-
+import CsvDownload from "https://cdn.skypack.dev/react-json-to-csv@1.0.4";
 //user_id cookie
 var defaultValue;
 
@@ -92,6 +92,11 @@ const columns = [
     minWidth: 50,
   },
   {
+    id: "csv",
+    label: "csv",
+    minWidth: 100,
+  },
+  {
     id: "button",
     label: "-",
     minWidth: 250,
@@ -107,7 +112,25 @@ export default function ExperimentSubPageMiddle(props) {
   const [openProtocol, setOpenProtocol] = React.useState(false);
   const [state, setState] = React.useState([]);
   const [listLength, setlistLength] = React.useState(false);
-
+  const [datas, setdatas] = React.useState([
+    {
+      code
+        :
+        "EEG1",
+      proto_exp_id
+        :
+        1089,
+      serial
+        :
+        19997304,
+      time
+        :
+        0,
+      v
+        :
+        -4236350
+    }
+  ])
   //데이터 생성
   function createData(
     id,
@@ -120,6 +143,7 @@ export default function ExperimentSubPageMiddle(props) {
     intensity,
     link,
     agreement,
+    csv,
     button
   ) {
     const today = new Date();
@@ -141,6 +165,7 @@ export default function ExperimentSubPageMiddle(props) {
       intensity,
       link,
       agreement,
+      csv,
       button,
       ages,
     };
@@ -235,6 +260,64 @@ export default function ExperimentSubPageMiddle(props) {
     handleProtocolClose();
   };
 
+  var data1 = [];
+  var data2 = [];
+  var data3 = [];
+  var data4 = [];
+  var data5 = [];
+  var data6 = []; 
+  function dataload(row) {
+    alert("데이터 로드 시작합니다. 잠시만 기다려주세요.");
+    const getData3 = async () => {
+      const infoBody = await Api.getAPI_GETEEG1Data(
+        row.id,
+        defaultValue
+      );
+      if (infoBody.data.length > 0) {
+        data1.push(infoBody.data);
+        data = data1[0].concat(data2[0]);
+      }
+      const infoBody2 = await Api.getAPI_GETEEG2Data(
+        row.id,
+        defaultValue
+      );
+      if (infoBody2.data.length > 0) {
+        data2.push(infoBody2.data);
+      }
+      const infoBody3 = await Api.getAPI_GETPPGData(
+        row.id,
+        defaultValue
+      );
+      if (infoBody3.data.length > 0) {
+        data3.push(infoBody3.data);
+      }
+      const infoBody4 = await Api.getAPI_GETXData(
+        row.id,
+        defaultValue
+      );
+      if (infoBody4.data.length > 0) {
+        data4.push(infoBody4.data);
+      }
+      const infoBody5 = await Api.getAPI_GETYData(
+        row.id,
+        defaultValue
+      );
+      if (infoBody5.data.length > 0) {
+        data5.push(infoBody5.data);
+      }
+      const infoBody6 = await Api.getAPI_GETZData(
+        row.id,
+        defaultValue
+      );
+      if (infoBody6.data.length > 0) {
+        data6.push(infoBody6.data);
+      } 
+      var data = data1[0].concat(data2[0], data3[0], data4[0], data5[0], data6[0]);
+      setdatas(data);
+      alert("데이터 로드가 끝났습니다. 다운로드해주세요.");
+    }
+    getData3();
+  }
   //실험데이터 삭제
   const handleDeleteAccount = (row) => {
     const getData = async () => {
@@ -391,7 +474,46 @@ export default function ExperimentSubPageMiddle(props) {
           <h5>{string2}</h5>
         </Box>
       );
-    } else {
+    } else if (value == "csv") {
+      return (
+        <Box>
+          <Button
+            style={{
+              color: "#CCCCCC",
+              borderRadius: 10,
+              backgroundColor: "#393939",
+              fontFamily: "GmarketSansMedium",
+              fontSize: 10,
+              width: 20,
+              height: 35,
+              marginRight: 5,
+            }}
+            onClick={() => dataload(row)}
+          >
+            Load
+          </Button>
+          <CsvDownload
+            // data : object 또는 object의 배열
+            data={datas}
+            // filename : 파일이름
+            filename='data.csv'
+            style={{
+              color: "white",
+              borderRadius: 10,
+              backgroundColor: "#2877b9",
+              fontFamily: "GmarketSansMedium",
+              fontSize: 10,
+              width: 100,
+              height: 35,
+            }}
+          >
+            Download
+          </CsvDownload>
+
+        </Box>
+      )
+    }
+    else {
       return value;
     }
   }
@@ -438,6 +560,7 @@ export default function ExperimentSubPageMiddle(props) {
             item.maxstimulus,
             link_txt,
             agree_txt,
+            "csv",
             "button"
           )
         );
@@ -445,9 +568,8 @@ export default function ExperimentSubPageMiddle(props) {
       setRows(d);
       return d;
     };
-
     getData();
-  }, []);
+  }, [datas]);
 
   return (
     <Paper

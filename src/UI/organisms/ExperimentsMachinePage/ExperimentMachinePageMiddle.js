@@ -172,7 +172,7 @@ export default function ExperimentMachinePageMiddle(props) {
                 var uint8array = new TextEncoder().encode(cmd);
                 deviceChar.writeValueWithoutResponse(uint8array);
               });
-
+              
             return service
               .getCharacteristic(NOTIFY_UUID)
               .then(function (characteristic) {

@@ -6,6 +6,8 @@ import ExperimentsMachinePageMarkerHeader from '../../molecules/ExperimentsMachi
 import ExperimentsMachinePageMarkerMiddle from '../../molecules/ExperimentsMachinePage/ExperimentsMachinePageMarkerMiddle';
 import Api from "../../../API/API";
 import cookie from "../../../API/cookie";
+import ExperimentsMachinePageStimulationHeader from "../../molecules/ExperimentsMachinePage/ExperimentsMachinePageStimulationHeader";
+import ExperimentsMachinePageStimulationMiddle from "../../molecules/ExperimentsMachinePage/ExperimentsMachinePageStimulationMiddle";
 
 const style = {
   position: "absolute",
@@ -44,6 +46,7 @@ function ExperimentMachineListPageHeader(props) {
   const Experimentsid = window.location.href.split("/");
   const [state, setState] = React.useState(true);
   const [openMarker, setOpenMarker] = React.useState(false);
+  const [openMarker2, setOpenMarker2] = React.useState(false);
   const handleOpenTrue = () => {
     props.propFunction2(false);
   };
@@ -56,6 +59,10 @@ function ExperimentMachineListPageHeader(props) {
     setState(!state);
     props.propFunction(!state);
   };
+  const handleOpenTrue2 = () => {
+    setOpenMarker2(true);
+  };
+  const handleCloseTrue2 = () => setOpenMarker2(false);
 
   const handleStateon = () => {
     var id = protocol_exp_id;
@@ -234,6 +241,30 @@ function ExperimentMachineListPageHeader(props) {
       >
         자극 설정
       </Button>
+      <Button
+        variant="contained"
+        style={{
+          float: "right",
+          display: "inline",
+          backgroundColor: "#5e646b",
+          marginTop: 25,
+          marginRight: 20,
+          fontFamily: "GmarketSansMedium",
+        }}
+        onClick={handleOpenTrue2}
+      >
+        자극 목록
+      </Button>
+      <Modal
+        open={openMarker2}
+        onClose={handleCloseTrue2}
+        BackdropProps={{ style: { opacity: 0.2 } }}
+      >
+        <Box sx={style}>
+          <ExperimentsMachinePageStimulationHeader propFunction={handleCloseTrue2} />
+          <ExperimentsMachinePageStimulationMiddle regtime={today} data={times} propFunction={handleCloseTrue2} />
+        </Box>
+      </Modal>
       <Button
         variant="contained"
         style={{

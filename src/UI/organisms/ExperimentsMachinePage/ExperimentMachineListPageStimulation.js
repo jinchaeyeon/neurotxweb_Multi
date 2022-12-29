@@ -11,12 +11,26 @@ import {
   Typography
 } from "@mui/material";
 import VolumeUp from "@mui/icons-material/VolumeUp";
-
+import Api from "../../../API/API";
+import cookie from "../../../API/cookie";
+const protocol_exp_id = window.location.href.split("/")[5];
 var bluetoothService = null;
 const WRITE_UUID = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
+var defaultValue;
 
+let user_id = cookie.getCookie("userAccount")
+  ? cookie.getCookie("userAccount")
+  : "";
+var api_token = cookie.getCookie("accessToken");
+
+if (user_id) {
+  defaultValue = {
+    key: api_token,
+  };
+}
 function ExperimentMachineListPageStimulation(props) {
   const machine = props.machine;
+  const data = props.data[0].t;
   const [valueWidth, setValueWidth] = React.useState(0);
   const [valueDuration, setValueDuration] = React.useState(20);
   const [valueAmplitude, setValueAmplitude] = React.useState(0);
@@ -33,7 +47,39 @@ function ExperimentMachineListPageStimulation(props) {
   };
 
   const handleAmplitudeSliderChange = (event, newValue) => {
-    setValueAmplitude(newValue);
+    if(newValue == 0) {
+      setValueAmplitude(0);
+    }
+    else if(newValue == 409.5) {
+      setValueAmplitude(5);
+    }
+    else if(newValue == 819) {
+      setValueAmplitude(50);
+    }
+    else if(newValue == 1228.5) {
+      setValueAmplitude(400);
+    }
+    else if(newValue == 1638) {
+      setValueAmplitude(800);
+    }
+    else if(newValue == 2047.5) {
+      setValueAmplitude(1100);
+    }
+    else if(newValue == 2457) {
+      setValueAmplitude(1500);
+    }
+    else if(newValue == 2866.5) {
+      setValueAmplitude(1900);
+    }
+    else if(newValue == 3276) {
+      setValueAmplitude(2400);
+    }
+    else if(newValue == 3685.5) {
+      setValueAmplitude(2700);
+    }
+    else {
+      setValueAmplitude(3100);
+    }
   };
 
   //0일 경우 duration이랑 같은 time으로 지정
@@ -55,11 +101,11 @@ function ExperimentMachineListPageStimulation(props) {
   };
 
   const handleup2 = () => {
-    AddStimulus(500, 100, 50, 50, 30);
+    AddStimulus(1100, 100, 50, 50, 30);
   };
 
   const handleup3 = () => {
-    AddStimulus(1000, 100, 50, 50, 30);
+    AddStimulus(3100, 100, 50, 50, 30);
   };
 
   React.useEffect(() => {
@@ -75,6 +121,16 @@ function ExperimentMachineListPageStimulation(props) {
     sti_height = parseInt(sti_height);
     var sti_long = Time;
     sti_long = parseInt(sti_long);
+
+    var obj={
+      "proto_exp_id": protocol_exp_id,
+      "intensity": sti_intensity,
+      "interval": sti_interval,
+      "height": sti_height,
+      "long": sti_long,
+      "time": data,
+      
+    };
 
     bluetoothService = machine;
     bluetoothService
@@ -108,6 +164,11 @@ function ExperimentMachineListPageStimulation(props) {
               });
           });
       });
+      const getData = async () => {
+        const infoData = await Api.getPostStimulus(obj ,defaultValue);
+        console.log(infoData);
+      };
+      getData();  
     alert("자극 전달 완료");
     props.propFunction2(true);
     props.propFunction3(new Date(), valueLimit); //타이머 설정을 위해 props 전달
@@ -117,26 +178,26 @@ function ExperimentMachineListPageStimulation(props) {
   function widthAmplitude() { 
     if (valueAmplitude == 0) {
       return "0mA";
-    } else if (valueAmplitude == 409.5) {
+    } else if (valueAmplitude < 50) {
       return "0.1mA";
-    } else if (valueAmplitude == 819) {
+    } else if (valueAmplitude == 50) {
       return "0.2mA";
-    } else if (valueAmplitude == 1228.5) {
+    } else if (valueAmplitude == 400) {
       return "0.3mA";
-    } else if (valueAmplitude == 1638) {
+    } else if (valueAmplitude == 800) {
       return "0.4mA";
-    } else if (valueAmplitude == 2047.5) {
+    } else if (valueAmplitude == 1100) {
       return "0.5mA";
-    } else if (valueAmplitude == 2457) {
+    } else if (valueAmplitude == 1500) {
       return "0.6mA";
-    } else if (valueAmplitude == 2866.5) {
+    } else if (valueAmplitude == 1900) {
       return "0.7mA";
-    } else if (valueAmplitude == 3276) {
+    } else if (valueAmplitude == 2400) {
       return "0.8mA";
-    } else if (valueAmplitude == 3685.5) {
+    } else if (valueAmplitude == 2700) {
       return "0.9mA";
     } else {
-      return "1.0mA";;
+      return "1.0mA";
     }
   }
 

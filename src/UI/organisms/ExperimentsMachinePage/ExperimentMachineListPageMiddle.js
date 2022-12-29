@@ -133,7 +133,10 @@ function ExperimentMachineListPageMiddle(props) {
     for (var i = 0; i < 6; i++) {
       chart[i] = getRealTimeChart();
     }
-    var upload_timer = window.setInterval(uploadData, 4000);
+    setInterval(() => {
+      //30초 마다 타이머 체크
+      uploadData();
+    }, 4000);
   }
 
   {
@@ -152,24 +155,24 @@ function ExperimentMachineListPageMiddle(props) {
       "B31_32_Z",
     ];
     if (state != "Pause") { //중지시 저장 x
-      for (var i = 0; i < 6; i++) {
+      for (var i = 0; i < 7; i++) {
         willBeUploadedDataArr.push({
           proto_exp_id: id,
           code: signal_names[i],
-          time: datas["t"],
-          v: datas[signal_names2[i]],
+          time: datas[0]["t"],
+          v: datas[0][signal_names2[i]],
         });
       }
-
       if (g_recv_idx <= last) {
          const getData = async () => {
           const infoData = await Api.getAPI_PostData(willBeUploadedDataArr,defaultValue);
+          console.log(infoData);
         };
         getData();
         g_recv_idx = g_recv_idx+ 600;
         willBeUploadedDataArr = [];
       }
-      last = datas["t"];
+      last = datas[0]["t"];
     }
   }
 

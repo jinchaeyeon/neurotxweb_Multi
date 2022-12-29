@@ -367,8 +367,28 @@ const Api = {
   },
   //실험데이터 전송
   getAPI_PostData: async (upload_data,defaultValue) => {
-    return await postJsonReqest(`/protocolExpsEvent/`, upload_data, defaultValue);
+    return await postJsonReqest(`/protocolExpSignal/`, upload_data, defaultValue);
   },
+    //실험데이터 조회
+  getAPI_GETEEG1Data: async (protocol_exp_id,defaultValue) => {
+    return await getFormRequest(`/protocolExpSignal/all/${protocol_exp_id}/EEG1`, defaultValue);
+  },
+  getAPI_GETEEG2Data: async (protocol_exp_id,defaultValue) => {
+    return await getFormRequest(`/protocolExpSignal/all/${protocol_exp_id}/EEG2`, defaultValue);
+  },
+  getAPI_GETPPGData: async (protocol_exp_id,defaultValue) => {
+    return await getFormRequest(`/protocolExpSignal/all/${protocol_exp_id}/PPG`, defaultValue);
+  },
+  getAPI_GETXData: async (protocol_exp_id,defaultValue) => {
+    return await getFormRequest(`/protocolExpSignal/all/${protocol_exp_id}/X`, defaultValue);
+  },
+  getAPI_GETYData: async (protocol_exp_id,defaultValue) => {
+    return await getFormRequest(`/protocolExpSignal/all/${protocol_exp_id}/Y`, defaultValue);
+  },
+  getAPI_GETZData: async (protocol_exp_id,defaultValue) => {
+    return await getFormRequest(`/protocolExpSignal/all/${protocol_exp_id}/Z`, defaultValue);
+  },
+
   //트리거 전송
   getAPI_PostTrigger: async(obj,defaultValue) => {
     return await postJsonReqest(`/protocolExpTrigger/`,obj,defaultValue);

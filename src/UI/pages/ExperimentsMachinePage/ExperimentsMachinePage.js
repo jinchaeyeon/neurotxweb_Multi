@@ -68,7 +68,7 @@ function ExperimentsMachinePage() {
           <>
             <Box style={{ backgroundColor: "#191919", padding: "1.rem 2rem", height: "auto" }}>
               <ExperimentMachinePageHeader />
-              <ExperimentMachineListPageStimulation starttime={starttime} machine={machine} propFunction={hightFunction2} propFunction2={hightFunction3} propFunction3={hightFunction4}/>
+              <ExperimentMachineListPageStimulation data={data} starttime={starttime} machine={machine} propFunction={hightFunction2} propFunction2={hightFunction3} propFunction3={hightFunction4}/>
               <ExperimentMachinePageFooter />
             </Box>
           </>
