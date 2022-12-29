@@ -22,7 +22,7 @@ import { Link } from "react-router-dom";
 import Api from "../../../API/API";
 import cookie from "../../../API/cookie";
 import Hidden from '@mui/material/Hidden';
-import CsvDownload from "https://cdn.skypack.dev/react-json-to-csv@1.0.4";
+import CsvDownload from 'react-json-to-csv';
 //user_id cookie
 var defaultValue;
 
