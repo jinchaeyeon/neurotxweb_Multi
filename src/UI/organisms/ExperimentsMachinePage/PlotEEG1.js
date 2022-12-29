@@ -29,7 +29,7 @@ export default function PlotEEG1(props) {
       ys.push(props.data);
       var num = [xs, ys];
       of(num).pipe(highpassFilter({ cutoffFrequency: 0.1, nbChannels: 4 }));
-      of(num).pipe(notchFilter({ cutoffFrequency: 60, nbChannels: 10, samplingRate: 1000, filterHarmonics: true }));
+      of(num).pipe(notchFilter({ cutoffFrequency: 60, nbChannels: 9, samplingRate: 250, filterHarmonics: true }));
     }
     return num;
   }

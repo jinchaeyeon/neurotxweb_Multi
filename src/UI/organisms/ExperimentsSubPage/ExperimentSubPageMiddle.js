@@ -128,7 +128,10 @@ export default function ExperimentSubPageMiddle(props) {
         0,
       v
         :
-        -4236350
+        -4236350,
+      regdate
+        :
+          new Date()
     }
   ])
   //데이터 생성

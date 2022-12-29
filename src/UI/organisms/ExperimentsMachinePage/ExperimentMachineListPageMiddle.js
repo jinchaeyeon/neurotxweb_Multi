@@ -10,6 +10,7 @@ import PlotZ from "./PlotZ";
 import Api from "../../../API/API";
 import cookie from "../../../API/cookie";
 import PlotPPGIR from "./PlotPPGIR";
+import { now } from "moment";
 
 var g_recv_idx = 800;
 var last = 0;
@@ -161,6 +162,7 @@ function ExperimentMachineListPageMiddle(props) {
           code: signal_names[i],
           time: datas[0]["t"],
           v: datas[0][signal_names2[i]],
+          regdate: new Date()
         });
       }
       if (g_recv_idx <= last) {
