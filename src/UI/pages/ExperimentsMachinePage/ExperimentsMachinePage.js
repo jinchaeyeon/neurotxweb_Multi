@@ -10,9 +10,7 @@ import ExperimentMachineListPageStimulation from "../../organisms/ExperimentsMac
 function ExperimentsMachinePage() {
   const [state, setState] = React.useState(false);
   const [mornitoringState, setMornitoringState] = React.useState();
-  const [data, setData] = React.useState([
-    { t : 0, B3_5_EEG1: 0, B6_8_EEG2: 0, B9_11_PPG_avg: 0, PPGIR: 0 , B27_28_X: 0, B29_30_Y: 0, B31_32_Z: 0 }
-  ]); //기기 데이터 형식 지정
+  const [data, setData] = React.useState([]); //기기 데이터 형식 지정
   const [machine, setMachine] = React.useState();
   const [starttime, setStarttime] = React.useState();
   const [starttime2, setStarttime2] = React.useState();
@@ -50,9 +48,7 @@ function ExperimentsMachinePage() {
   const hightFunction2 = (text) => {
     setMornitoringState(text);
   }
-  useEffect (()=> {
 
-  }, [state2])
   return (
     <>
       {state == false ? (

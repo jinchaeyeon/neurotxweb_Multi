@@ -12,7 +12,7 @@ import cookie from "../../../API/cookie";
 import PlotPPGIR from "./PlotPPGIR";
 import { now } from "moment";
 
-var g_recv_idx = 800;
+var times = 800;
 var last = 0;
 const d3 = document.createElement("script");
 d3.src = "https://d3js.org/d3.v4.min.js";
@@ -134,10 +134,7 @@ function ExperimentMachineListPageMiddle(props) {
     for (var i = 0; i < 6; i++) {
       chart[i] = getRealTimeChart();
     }
-    setInterval(() => {
-      //30초 마다 타이머 체크
-      uploadData();
-    }, 4000);
+    uploadData();
   }
 
   {
@@ -160,18 +157,18 @@ function ExperimentMachineListPageMiddle(props) {
         willBeUploadedDataArr.push({
           proto_exp_id: id,
           code: signal_names[i],
-          time: datas[0]["t"],
+          time: datas[0].t,
           v: datas[0][signal_names2[i]],
           regdate: new Date()
         });
       }
-      if (g_recv_idx <= last) {
+      if (times <= last) {
          const getData = async () => {
           const infoData = await Api.getAPI_PostData(willBeUploadedDataArr,defaultValue);
           console.log(infoData);
         };
         getData();
-        g_recv_idx = g_recv_idx+ 600;
+        times = times+ 600;
         willBeUploadedDataArr = [];
       }
       last = datas[0]["t"];
